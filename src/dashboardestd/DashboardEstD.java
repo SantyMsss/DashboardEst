@@ -277,6 +277,29 @@ public class DashboardEstD extends JFrame{
         add(jsplit);
     }
     
+    
+    public void eventojcp0() 
+    {
+        
+        
+    }
+    
+    
+    public void eventojcp1() 
+    {
+        
+        
+    }
+    
+    
+    public void eventojcp2() 
+    {
+        
+        
+    }
+    
+    
+    
     public static void main(String[] args) {
          DashboardEstD v = new DashboardEstD ();
     }
