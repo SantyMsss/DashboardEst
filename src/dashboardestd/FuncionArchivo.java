@@ -69,10 +69,11 @@ public class FuncionArchivo {
         System.out.println(nacional);
         System.out.println(uceva);
         System.out.println(univalle);         
-        System.out.println(antioquia);       
+        System.out.println(antioquia);
+        
     }
-
     
+
     
     public static void main(String[] args) {
         FuncionArchivo obj = new FuncionArchivo();

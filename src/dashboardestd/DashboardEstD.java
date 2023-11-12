@@ -6,6 +6,7 @@ import java.awt.Graphics;
 import javax.swing.ImageIcon;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -24,41 +25,37 @@ public class DashboardEstD extends JFrame{
     JCheckBox jck1_P2, jck2_P2,jck1_P3,jck2_P3,jck3_P3,jck1_P4,jck2_P4;
     JLabel jlImagen1, jlImagen2;
     
-    public DashboardEstD(){
+    public DashboardEstD() {
         super("Ejemplo de JSplitPane");
         setSize(1200, 700);
-        setExtendedState(JFrame.MAXIMIZED_BOTH);// ventana maximizada
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        
+
         crearGUI();
         setVisible(true);
     }
     
-    private void crearGUI() {        
-        //------------------- Area de control de consulta ----------------------
-        
-          izq = new JPanel() {
+    private void crearGUI() {
+        izq = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                // Carga la imagen de fondo desde una ruta local
                 ImageIcon imageIcon = new ImageIcon("C:\\Users\\USER\\Documents\\NetBeansProjects\\ESTRUCTURA DE DATOS\\DashboardEstD\\src\\imagenes\\luna.jpg");
-                // Dibuja la imagen de fondo
                 g.drawImage(imageIcon.getImage(), 0, 0, getWidth(), getHeight(), this);
             }
         };
         izq.setLayout(null);
-        
-             JTextArea topTextArea = new JTextArea("PROGRAMADORES \n Santiago Martinez Serna.\n Laura Sofica Toro. \n Santiago Santacruz Cuellar\n\n GRAFICAS EGRESADOS COLOMBIA: Seleccione datos a consultar\n ");
-             
-        topTextArea.setOpaque(false); // Hacer el fondo transparente
+
+        JComponent topTextArea = new JTextArea("PROGRAMADORES \n Santiago Martinez Serna.\n Laura Sofica Toro. \n Santiago Santacruz Cuellar\n\n GRAFICAS EGRESADOS COLOMBIA: Seleccione datos a consultar\n ");
+        topTextArea.setOpaque(false);
         topTextArea.setForeground(Color.white);
-        topTextArea.setEditable(false); // No editable
-        topTextArea.setLineWrap(true); // Salto de línea automático
-        topTextArea.setWrapStyleWord(true); // Salto de línea en palabras
-        topTextArea.setBounds(10, 0, 400, 100); // Ajusta las coordenadas y el tamaño según tus necesidades
+        topTextArea.setFocusable(false);
+        ((JTextArea) topTextArea).setLineWrap(true);
+        ((JTextArea) topTextArea).setWrapStyleWord(true);
+        topTextArea.setBounds(10, 0, 400, 100);
         izq.add(topTextArea);
+
         
         
         //----------------------- Area de graficas -----------------------------
@@ -148,20 +145,20 @@ public class DashboardEstD extends JFrame{
         panel8.add(jcP7);        
         izq.add(panel8);
         
-        panel4 = new JPanel();// jpanel para opciones de consulta
-        panel4.setLayout(null);
-        panel4.setBackground(Color.WHITE);
-        panel4.setBounds(10, 390, 260, 50);// coord con respecto al panel izq
-        panel4.setBorder(new TitledBorder("Metodologia "));
+        JPanel panelMetodologia = new JPanel();
+        panelMetodologia.setLayout(null);
+        panelMetodologia.setBackground(Color.WHITE);
+        panelMetodologia.setBounds(10, 390, 260, 50);
+        panelMetodologia.setBorder(new TitledBorder("Metodologia "));
         jcP2 = new JComboBox<>();
         jcP2.addItem("Presencial");
-         jcP2.addItem("Presencial-Virtual");
+        jcP2.addItem("Presencial-Virtual");
         jcP2.addItem("Distancia");
         jcP2.addItem("Distancia tradicional");
         jcP2.addItem("Distancia virtual");
-        jcP2.setBounds(15, 17, 240, 25);//coord con respecto al panel panel1
-        panel4.add(jcP2);        
-        izq.add(panel4);
+        jcP2.setBounds(15, 17, 240, 25);
+        panelMetodologia.add(jcP2);
+        izq.add(panelMetodologia);
         
          
         panel6 = new JPanel();// jpanel para opciones de consulta
@@ -269,12 +266,15 @@ public class DashboardEstD extends JFrame{
         */
         
         JScrollPane js = new JScrollPane(der);
-                
+
         jsplit = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, izq, js);
         jsplit.setOneTouchExpandable(true);
         jsplit.setDividerLocation(550);
-        
+
         add(jsplit);
+
+        // Agrega listeners a los JComboBox o JCheckBox según sea necesario
+        jcP2.addActionListener(e -> eventojcp2());
     }
     
     
