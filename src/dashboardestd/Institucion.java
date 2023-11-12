@@ -17,6 +17,10 @@ public class Institucion {
        
     }
 
+    public String getDepto() {
+        return depto;
+    }
+
     public String getNivacademico() {
         return nivacademico;
     }
@@ -25,9 +29,6 @@ public class Institucion {
         return nombre;
     }
 
-    public String getdepto() {
-        return depto;
-    }
 
     public int getTipo() {
         return tipo;

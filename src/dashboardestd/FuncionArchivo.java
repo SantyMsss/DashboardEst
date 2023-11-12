@@ -73,7 +73,7 @@ public class FuncionArchivo {
     public void listar(){
         for (int i = 0; i < inst.size(); i++) {
             Institucion obj = inst.get(i);
-            System.out.println((i+1) + " " + obj.getdepto());
+            System.out.println((i+1) + " " + obj.getDepto());
         }
     }
     
@@ -541,5 +541,4 @@ public class FuncionArchivo {
        
         
     }
-
 }

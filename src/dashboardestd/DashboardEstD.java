@@ -159,14 +159,71 @@ public class DashboardEstD extends JFrame{
         panelForm.setLayout(null);
         panelForm.setBackground(Color.WHITE);
         panelForm.setBounds(280, 210, 260, 50);// coord con respecto al panel izq
-        panelForm.setBorder(new TitledBorder("Nivel de Formacion"));
+        panelForm.setBorder(new TitledBorder("Caracter"));
         jcpForm = new JComboBox<>();
-        jcpForm.addItem("Universitaria");
-        jcpForm.addItem("Doctorado"); 
-        jcpForm.addItem("Especializacion Tecnico Profesional");
+        jcpForm.addItem("Inst tecnica profesional");
+        jcpForm.addItem("Inst tecnica"); 
+        jcpForm.addItem("Institucion Universitaria");
+          jcpForm.addItem("Universidad");
         jcpForm.setBounds(15, 17, 240, 25);//coord con respecto al panel panelUni
         panelForm.add(jcpForm);        
         izq.add(panelForm);
+        
+        //-------------------------inicio checkbox------------------------------------
+        
+        panel4 = new JPanel();// jpanel para opciones de consulta
+        panel4.setLayout(null);
+        panel4.setBackground(Color.WHITE);
+        panel4.setBounds(280, 270, 260, 50);// coord con respecto al panel izq
+        panel4.setBorder(new TitledBorder("Sector IES"));
+        jck1_P3 = new JCheckBox("PRIVADA");
+        jck1_P3.setBounds(15, 17, 100, 25);//coord con respecto al panel2
+        jck2_P3 = new JCheckBox("OFICIAL");
+        jck2_P3.setBounds(120, 17, 100, 25);//coord con respecto al panel2
+        panel4.add(jck1_P3);
+        panel4.add(jck2_P3);
+        izq.add(panel4);
+        
+        panel3 = new JPanel();// jpanel para opciones de consulta
+        panel3.setLayout(null);
+        panel3.setBackground(Color.WHITE);
+        panel3.setBounds(10, 330, 260, 50);// coord con respecto al panel izq
+        panel3.setBorder(new TitledBorder("Nivel Academico"));
+        jck1_P3 = new JCheckBox("Pregrado");
+        jck1_P3.setBounds(15, 17, 100, 25);//coord con respecto al panel2
+        jck3_P3 = new JCheckBox("Posgrado");
+        jck3_P3.setBounds(120, 17, 100, 25);//coord con respecto al panel2
+        panel3.add(jck1_P3);
+        panel3.add(jck3_P3);
+        izq.add(panel3);
+        
+        panel9 = new JPanel();// jpanel para opciones de consulta
+        panel9.setLayout(null);
+        panel9.setBackground(Color.WHITE);
+        panel9.setBounds(280, 330, 260, 50);// coord con respecto al panel izq
+        panel9.setBorder(new TitledBorder("P O S"));
+        jck1_P4 = new JCheckBox("Principal");
+        jck1_P4.setBounds(15, 17, 100, 25);//coord con respecto al panel2
+        jck2_P4 = new JCheckBox("Seleccional");
+        jck2_P4.setBounds(120, 17, 100, 25);//coord con respecto al panel2
+        panel9.add(jck1_P4);
+        panel9.add(jck2_P4);
+        izq.add(panel9);
+        
+        panel2 = new JPanel();// jpanel para opciones de consulta
+        panel2.setLayout(null);
+        panel2.setBackground(Color.WHITE);
+        panel2.setBounds(10, 270, 260, 50);// coord con respecto al panel izq
+        panel2.setBorder(new TitledBorder("Sexo"));
+        jck1_P2 = new JCheckBox("Hombre");
+        jck1_P2.setBounds(15, 17, 100, 25);//coord con respecto al panel2
+        jck2_P2 = new JCheckBox("Mujer");
+        jck2_P2.setBounds(120, 17, 100, 25);//coord con respecto al panel2
+        panel2.add(jck1_P2);
+        panel2.add(jck2_P2);
+        izq.add(panel2);
+        
+        
         
         //-----------------------Creación de JButtons-----------------------------
         
@@ -352,7 +409,7 @@ private void generarTodosLosGraficos(FuncionArchivo funcionArchivo) {
 // Métodos de generación de gráficos modificados para aceptar FuncionArchivo como parámetro
 public void eventoHombresxMujeres(FuncionArchivo funcionArchivo) {
     ChartPanel chartPanel = funcionArchivo.generarGraficoHombresMujeres();
-    actualizarPanelGrafico(panel_graf1, chartPanel);
+    actualizarPanelGrafico(panel_graf5, chartPanel);
 }
 
 public void eventoPregxPosg(FuncionArchivo funcionArchivo) {
@@ -372,7 +429,7 @@ public void eventoxCaracter(FuncionArchivo funcionArchivo) {
 
 public void eventoxDepto(FuncionArchivo funcionArchivo) {
     ChartPanel chartPanel = funcionArchivo.generarGraficoxDepto();
-    actualizarPanelGrafico(panel_graf5, chartPanel);
+    actualizarPanelGrafico(panel_graf1, chartPanel);
 }
 
 // Nuevo método para actualizar el panel de gráfico
@@ -413,11 +470,11 @@ private void actualizarPanelGrafico(JPanel panelGrafico, ChartPanel chartPanel) 
     ChartPanel chartPanel = funcionArchivo.generarGraficoHombresMujeres();
 
     // Limpiar el panel y agregar el nuevo gráfico
-    panel_graf1.removeAll();
-    panel_graf1.setLayout(new BorderLayout()); // Usar un BorderLayout
-    panel_graf1.add(chartPanel, BorderLayout.CENTER);
-    panel_graf1.revalidate();
-    panel_graf1.repaint();
+    panel_graf5.removeAll();
+    panel_graf5.setLayout(new BorderLayout()); // Usar un BorderLayout
+    panel_graf5.add(chartPanel, BorderLayout.CENTER);
+    panel_graf5.revalidate();
+    panel_graf5.repaint();
 }
      
      public void eventoPregxPosg() {
@@ -514,11 +571,11 @@ private void actualizarPanelGrafico(JPanel panelGrafico, ChartPanel chartPanel) 
     ChartPanel chartPanel = funcionArchivo.generarGraficoxDepto();
 
     // Limpiar el panel y agregar el nuevo gráfico
-    panel_graf5.removeAll();
-    panel_graf5.setLayout(new BorderLayout()); // Usar un BorderLayout
-    panel_graf5.add(chartPanel, BorderLayout.CENTER);
-    panel_graf5.revalidate();
-    panel_graf5.repaint();
+    panel_graf1.removeAll();
+    panel_graf1.setLayout(new BorderLayout()); // Usar un BorderLayout
+    panel_graf1.add(chartPanel, BorderLayout.CENTER);
+    panel_graf1.revalidate();
+    panel_graf1.repaint();
 }
 
     
