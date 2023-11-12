@@ -3,25 +3,30 @@ package dashboardestd;
 
 
 public class Institucion {
-    String nombre, ciudad, genero;
+    String nombre, depto, genero, nivacademico;
     int tipo; //1-> OFICIAL, 2-> PRIVADO
     int caracter;
 
-    public Institucion(String nombre, String ciudad, int tipo, int caracter, String genero) {
+    public Institucion(String nombre, String depto, int tipo, int caracter, String genero, String nivacademico) {
         this.nombre = nombre;
          this.genero = genero;
-        this.ciudad = ciudad;
+        this.depto = depto;
+        this.nivacademico = nivacademico;
         this.tipo = tipo;
         this.caracter = caracter;
        
+    }
+
+    public String getNivacademico() {
+        return nivacademico;
     }
 
     public String getNombre() {
         return nombre;
     }
 
-    public String getCiudad() {
-        return ciudad;
+    public String getdepto() {
+        return depto;
     }
 
     public int getTipo() {

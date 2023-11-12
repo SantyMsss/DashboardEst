@@ -34,9 +34,9 @@ public class DashboardEstD extends JFrame{
     
 
     JSplitPane jsplit;
-    JButton jbHombrexMujeres;
-    JPanel izq, panelBut1, panelYear,panelUni, panel2,panel3,panel4,panelDep,panel6,panelMun,panelForm,panel9,der;
-    JPanel panel_graf1, panel_graf2, panel_graf3, panel_graf4;// cambiar por ChartPanel
+    JButton jButtones;
+    JPanel izq, panelBut, panelYear,panelUni, panel2,panel3,panel4,panelDep,panel6,panelMun,panelForm,panel9,der;
+    JPanel panel_graf1, panel_graf2, panel_graf3, panel_graf4, panel_graf5, panel_graf6, panel_graf7, panel_graf8, panel_graf9, panel_graf10cal;// cambiar por ChartPanel
     JComboBox<String> jcpUni,jcpYear,jcP2,jcpDep,jcP5,jcpMun,jcpForm;
     JCheckBox jck1_P2, jck2_P2,jck1_P3,jck2_P3,jck3_P3,jck1_P4,jck2_P4;
     JLabel jlImagen1, jlImagen2;
@@ -96,6 +96,7 @@ public class DashboardEstD extends JFrame{
         jcpYear.setBounds(15, 17, 100, 25);//coord con respecto al panel panelUni
         panelYear.add(jcpYear);        
         izq.add(panelYear);
+        
         jcpYear.addActionListener(new ActionListener() {
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -167,36 +168,99 @@ public class DashboardEstD extends JFrame{
         panelForm.add(jcpForm);        
         izq.add(panelForm);
         
-        //Creación de JButton
-        //Creación de JButton
-        panelBut1 = new JPanel();
-        panelBut1.setLayout(null);
-        panelBut1.setBackground(Color.WHITE);
-        panelBut1.setBounds(10, 270, 260, 50);
-        panelBut1.setBorder(new TitledBorder("Graduados"));
-        jbHombrexMujeres = new JButton("Hombres x Mujeres");
-        jbHombrexMujeres.setBounds(15, 17, 240, 25);
-        panelBut1.add(jbHombrexMujeres);
-        izq.add(panelBut1);  // Cambiar panelForm por panelBut1
-                    jbHombrexMujeres.addActionListener(new ActionListener() {
+        //-----------------------Creación de JButtons-----------------------------
+        
+        // BOTON GRAF HOMXMUJ
+        panelBut = new JPanel();
+        panelBut.setLayout(null);
+        panelBut.setBackground(Color.WHITE);
+        panelBut.setBounds(10, 270, 260, 50);
+        panelBut.setBorder(new TitledBorder("Grafico"));
+        jButtones = new JButton("Hombres vs Mujeres");
+        jButtones.setBounds(15, 17, 240, 25);
+        panelBut.add(jButtones);
+        izq.add(panelBut);  // Cambiar panelForm por panelBut
+                    jButtones.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     eventoHombresxMujeres();
                 }
             });
+                  
+           // BOTON GRAF PREGVSPOSG         
+           panelBut = new JPanel();
+            panelBut.setLayout(null);
+            panelBut.setBackground(Color.WHITE);
+            panelBut.setBounds(10, 330, 260, 50);
+            panelBut.setBorder(new TitledBorder("Grafico"));
+            jButtones = new JButton("Pregrado vs Posgrado");
+            jButtones.setBounds(15, 17, 240, 25);
+            panelBut.add(jButtones);
+            izq.add(panelBut);  // Cambiar panelForm por panelBut
+                        jButtones.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        eventoPregxPosg();
+                    }
+                });
+               
+                // BOTON GRAF OFICVSPRIV          
+           panelBut = new JPanel();
+            panelBut.setLayout(null);
+            panelBut.setBackground(Color.WHITE);
+            panelBut.setBounds(10, 390, 260, 50);
+            panelBut.setBorder(new TitledBorder("Grafico"));
+            jButtones = new JButton("Oficial vs Privada");
+            jButtones.setBounds(15, 17, 240, 25);
+            panelBut.add(jButtones);
+            izq.add(panelBut);  // Cambiar panelForm por panelBut
+                        jButtones.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        eventoOficxPriv();
+                    }
+                });          
+                        
+             // BOTON xCARACTER         
+           panelBut = new JPanel();
+            panelBut.setLayout(null);
+            panelBut.setBackground(Color.WHITE);
+            panelBut.setBounds(10, 450, 260, 50);
+            panelBut.setBorder(new TitledBorder("Grafico"));
+            jButtones = new JButton("Caracter Instituciones");
+            jButtones.setBounds(15, 17, 240, 25);
+            panelBut.add(jButtones);
+            izq.add(panelBut);  // Cambiar panelForm por panelBut
+                        jButtones.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        eventoxCaracter();
+                    }
+                }); 
+              
+             panelBut = new JPanel();
+            panelBut.setLayout(null);
+            panelBut.setBackground(Color.WHITE);
+            panelBut.setBounds(10, 510, 260, 50);
+            panelBut.setBorder(new TitledBorder("Grafico"));
+            jButtones = new JButton("Por Departamentos");
+            jButtones.setBounds(15, 17, 240, 25);
+            panelBut.add(jButtones);
+            izq.add(panelBut);  // Cambiar panelForm por panelBut
+                        jButtones.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        eventoxDepto();
+                    }
+                });     
+                        
+                       
+                       
 
         
         
         //-----------------------------------------------DESARROLLO GRAFICAS--------------------------------------------------------------
-       
-        
-
-
-
-   
-        
-        //----------------------- Area de graficas -----------------------------
-        
+      
         der = new JPanel();
         der.setLayout(null);
         der.setPreferredSize(new Dimension(2000, 2000));//tamaño del jpanel der para mostrar las graficas       
@@ -226,6 +290,12 @@ public class DashboardEstD extends JFrame{
         panel_graf4.setBounds(532, 532, 512, 512);
         der.add(panel_graf4);
         
+        panel_graf5 = new JPanel();// esto seria el ChartPanel de la grafica 4
+        panel_graf5.setLayout(null);
+        panel_graf5.setBackground(Color.RED);        
+        panel_graf5.setBounds(10, 1064, 512, 512);
+        der.add(panel_graf5);
+        
         /*
         .....
         anadir tantos ChartPanel como graficas a mostrar
@@ -248,10 +318,19 @@ public class DashboardEstD extends JFrame{
     
     public void eventojcpYear() 
     {
+        FuncionArchivo funcionArchivo = new FuncionArchivo();
+    
       String selectedYear = (String) jcpYear.getSelectedItem();
-    // Realizar acciones basadas en el año seleccionado
-    // Por ejemplo, imprimirlo en la consola
-     
+        switch (selectedYear) {
+            case "2020": System.out.println("2020");
+                break;
+             case "2021": System.out.println("2021");
+                break;
+             case "2022":System.out.println("2022");
+                break;
+            default:
+                throw new AssertionError();
+        }
         
     }
     
@@ -267,8 +346,19 @@ public class DashboardEstD extends JFrame{
 
      public void eventoHombresxMujeres() {
     FuncionArchivo funcionArchivo = new FuncionArchivo();
-    funcionArchivo.Leer_Archivo("2020comas.csv"); // Asegúrate de proporcionar la ruta correcta del archivo
-
+    
+      String selectedYear = (String) jcpYear.getSelectedItem();
+        switch (selectedYear) {
+            case "2020": funcionArchivo.Leer_Archivo("2020comas.csv"); 
+                break;
+             case "2021": funcionArchivo.Leer_Archivo("2021comas.csv"); 
+                break;
+             case "2022": funcionArchivo.Leer_Archivo("2022comas.csv"); 
+                break;
+            default:
+                throw new AssertionError();
+        }
+    
     ChartPanel chartPanel = funcionArchivo.generarGraficoHombresMujeres();
 
     // Limpiar el panel y agregar el nuevo gráfico
@@ -277,6 +367,107 @@ public class DashboardEstD extends JFrame{
     panel_graf1.add(chartPanel, BorderLayout.CENTER);
     panel_graf1.revalidate();
     panel_graf1.repaint();
+}
+     
+     public void eventoPregxPosg() {
+    FuncionArchivo funcionArchivo = new FuncionArchivo();
+    
+      String selectedYear = (String) jcpYear.getSelectedItem();
+        switch (selectedYear) {
+            case "2020": funcionArchivo.Leer_Archivo("2020comas.csv"); 
+                break;
+             case "2021": funcionArchivo.Leer_Archivo("2021comas.csv"); 
+                break;
+             case "2022": funcionArchivo.Leer_Archivo("2022comas.csv"); 
+                break;
+            default:
+                throw new AssertionError();
+        }
+    
+    ChartPanel chartPanel = funcionArchivo.generarGraficoPregPosg();
+
+    // Limpiar el panel y agregar el nuevo gráfico
+    panel_graf2.removeAll();
+    panel_graf2.setLayout(new BorderLayout()); // Usar un BorderLayout
+    panel_graf2.add(chartPanel, BorderLayout.CENTER);
+    panel_graf2.revalidate();
+    panel_graf2.repaint();
+}
+     
+      public void eventoOficxPriv() {
+    FuncionArchivo funcionArchivo = new FuncionArchivo();
+    
+      String selectedYear = (String) jcpYear.getSelectedItem();
+        switch (selectedYear) {
+            case "2020": funcionArchivo.Leer_Archivo("2020comas.csv"); 
+                break;
+             case "2021": funcionArchivo.Leer_Archivo("2021comas.csv"); 
+                break;
+             case "2022": funcionArchivo.Leer_Archivo("2022comas.csv"); 
+                break;
+            default:
+                throw new AssertionError();
+        }
+    
+    ChartPanel chartPanel = funcionArchivo.generarGraficoOficxPriv();
+
+    // Limpiar el panel y agregar el nuevo gráfico
+    panel_graf3.removeAll();
+    panel_graf3.setLayout(new BorderLayout()); // Usar un BorderLayout
+    panel_graf3.add(chartPanel, BorderLayout.CENTER);
+    panel_graf3.revalidate();
+    panel_graf3.repaint();
+}
+      
+      
+      public void eventoxCaracter() {
+    FuncionArchivo funcionArchivo = new FuncionArchivo();
+    
+      String selectedYear = (String) jcpYear.getSelectedItem();
+        switch (selectedYear) {
+            case "2020": funcionArchivo.Leer_Archivo("2020comas.csv"); 
+                break;
+             case "2021": funcionArchivo.Leer_Archivo("2021comas.csv"); 
+                break;
+             case "2022": funcionArchivo.Leer_Archivo("2022comas.csv"); 
+                break;
+            default:
+                throw new AssertionError();
+        }
+    
+    ChartPanel chartPanel = funcionArchivo.generarGraficoxCaracter();
+
+    // Limpiar el panel y agregar el nuevo gráfico
+    panel_graf4.removeAll();
+    panel_graf4.setLayout(new BorderLayout()); // Usar un BorderLayout
+    panel_graf4.add(chartPanel, BorderLayout.CENTER);
+    panel_graf4.revalidate();
+    panel_graf4.repaint();
+}
+      
+       public void eventoxDepto() {
+    FuncionArchivo funcionArchivo = new FuncionArchivo();
+    
+      String selectedYear = (String) jcpYear.getSelectedItem();
+        switch (selectedYear) {
+            case "2020": funcionArchivo.Leer_Archivo("2020comas.csv"); 
+                break;
+             case "2021": funcionArchivo.Leer_Archivo("2021comas.csv"); 
+                break;
+             case "2022": funcionArchivo.Leer_Archivo("2022comas.csv"); 
+                break;
+            default:
+                throw new AssertionError();
+        }
+    
+    ChartPanel chartPanel = funcionArchivo.generarGraficoxDepto();
+
+    // Limpiar el panel y agregar el nuevo gráfico
+    panel_graf5.removeAll();
+    panel_graf5.setLayout(new BorderLayout()); // Usar un BorderLayout
+    panel_graf5.add(chartPanel, BorderLayout.CENTER);
+    panel_graf5.revalidate();
+    panel_graf5.repaint();
 }
 
     
