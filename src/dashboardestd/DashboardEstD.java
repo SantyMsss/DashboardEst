@@ -170,6 +170,7 @@ public class DashboardEstD extends JFrame{
         
         //-----------------------Creación de JButtons-----------------------------
         
+        /*
         // BOTON GRAF HOMXMUJ
         panelBut = new JPanel();
         panelBut.setLayout(null);
@@ -253,6 +254,7 @@ public class DashboardEstD extends JFrame{
                         eventoxDepto();
                     }
                 });     
+        */
                         
                        
                        
@@ -316,23 +318,72 @@ public class DashboardEstD extends JFrame{
     }
     
     
-    public void eventojcpYear() 
-    {
-        FuncionArchivo funcionArchivo = new FuncionArchivo();
-    
-      String selectedYear = (String) jcpYear.getSelectedItem();
-        switch (selectedYear) {
-            case "2020": System.out.println("2020");
-                break;
-             case "2021": System.out.println("2021");
-                break;
-             case "2022":System.out.println("2022");
-                break;
-            default:
-                throw new AssertionError();
-        }
-        
+    public void eventojcpYear() {
+    FuncionArchivo funcionArchivo = new FuncionArchivo();
+
+    String selectedYear = (String) jcpYear.getSelectedItem();
+    switch (selectedYear) {
+        case "2020":
+            funcionArchivo.Leer_Archivo("2020comas.csv");
+            break;
+        case "2021":
+            funcionArchivo.Leer_Archivo("2021comas.csv");
+            break;
+        case "2022":
+            funcionArchivo.Leer_Archivo("2022comas.csv");
+            break;
+        default:
+            throw new AssertionError();
     }
+
+    // Llamar a los métodos que generan los gráficos
+    generarTodosLosGraficos(funcionArchivo);
+}
+
+// Nuevo método para generar todos los gráficos
+private void generarTodosLosGraficos(FuncionArchivo funcionArchivo) {
+    eventoHombresxMujeres(funcionArchivo);
+    eventoPregxPosg(funcionArchivo);
+    eventoOficxPriv(funcionArchivo);
+    eventoxCaracter(funcionArchivo);
+    eventoxDepto(funcionArchivo);
+}
+
+// Métodos de generación de gráficos modificados para aceptar FuncionArchivo como parámetro
+public void eventoHombresxMujeres(FuncionArchivo funcionArchivo) {
+    ChartPanel chartPanel = funcionArchivo.generarGraficoHombresMujeres();
+    actualizarPanelGrafico(panel_graf1, chartPanel);
+}
+
+public void eventoPregxPosg(FuncionArchivo funcionArchivo) {
+    ChartPanel chartPanel = funcionArchivo.generarGraficoPregPosg();
+    actualizarPanelGrafico(panel_graf2, chartPanel);
+}
+
+public void eventoOficxPriv(FuncionArchivo funcionArchivo) {
+    ChartPanel chartPanel = funcionArchivo.generarGraficoOficxPriv();
+    actualizarPanelGrafico(panel_graf3, chartPanel);
+}
+
+public void eventoxCaracter(FuncionArchivo funcionArchivo) {
+    ChartPanel chartPanel = funcionArchivo.generarGraficoxCaracter();
+    actualizarPanelGrafico(panel_graf4, chartPanel);
+}
+
+public void eventoxDepto(FuncionArchivo funcionArchivo) {
+    ChartPanel chartPanel = funcionArchivo.generarGraficoxDepto();
+    actualizarPanelGrafico(panel_graf5, chartPanel);
+}
+
+// Nuevo método para actualizar el panel de gráfico
+private void actualizarPanelGrafico(JPanel panelGrafico, ChartPanel chartPanel) {
+    panelGrafico.removeAll();
+    panelGrafico.setLayout(new BorderLayout());
+    panelGrafico.add(chartPanel, BorderLayout.CENTER);
+    panelGrafico.revalidate();
+    panelGrafico.repaint();
+}
+
     
     
     public void eventojcpUni() 
