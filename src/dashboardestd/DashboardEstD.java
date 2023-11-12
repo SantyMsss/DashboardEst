@@ -183,7 +183,12 @@ public class DashboardEstD extends JFrame{
         panel4.add(jck1_P3);
         panel4.add(jck2_P3);
         izq.add(panel4);
-        
+        jcpYear.addActionListener(new ActionListener() {
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        eventojcpYear(); // Llamar al método correspondiente cuando se seleccione un año
+    }
+});
         panel3 = new JPanel();// jpanel para opciones de consulta
         panel3.setLayout(null);
         panel3.setBackground(Color.WHITE);
