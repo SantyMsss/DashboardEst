@@ -3,24 +3,52 @@ package dashboardestd;
 /*
 INDICE DE LOS DATOS: 
 universidad;id sector ies; id caracter; caracter; código del departamento (ies); departamento de domicilio de la ies;código del municipio (ies);municipio de domicilio de la ies; código snies del programa; programa académico; id nivel académico;nivel académico;id nivel de formación;nivel de formación; id metodología;metodología;id área;área de conocimiento;id cine campo especifico;desc cine campo especifico;id sexo;sexo;año;semestre;graduados     
-"UNIVERSIDAD NACIONAL DE COLOMBIA;1;4;Universidad;11;Bogotá D.C.;11001;""Bogotá; D.C."";1;INGENIERIA AGRONOMICA;1;PREGRADO;6;Universitaria;1;Presencial;8;""Ingeniería; arquitectura; urbanismo y afines"";81;Agropecuario;1;Hombre;2020;1;29"
+UNIVERSIDAD NACIONAL DE COLOMBIA,1,4,Universidad,11,BogotáD.C.,11001,BogotáD.C,1,INGENIERIA AGRONOMICA,1,PREGRADO,6,Universitaria,1,Presencial,8,Ingeniería arquitectura urbanismo y afines,81,Agropecuario,1,Hombre,2020,1,29
+
+Token 0: UNIVERSIDAD NACIONAL DE COLOMBIA
+Token 1: 1
+Token 2: 4
+Token 3: Universidad
+Token 4: 11
+Token 5: Bogot�D.C.
+Token 6: 11001
+Token 7: Bogot�D.C
+Token 8: 1
+Token 9: INGENIERIA AGRONOMICA
+Token 10: 1
+Token 11: PREGRADO
+Token 12: 6
+Token 13: Universitaria
+Token 14: 1
+Token 15: Presencial
+Token 16: 8
+Token 17: Ingenier�a arquitectura urbanismo y afines
+Token 18: 81
+Token 19: Agropecuario
+Token 20: 1
+Token 21: Hombre
+Token 22: 2020
+Token 23: 1
+Token 24: 29
 
 */
-
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.util.ArrayList;
-import javax.swing.JFrame;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.CategoryAxis;
+import org.jfree.chart.axis.CategoryLabelPositions;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.plot.CategoryPlot;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.category.CategoryDataset;
+import org.jfree.data.category.DefaultCategoryDataset;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.jfree.chart.plot.PiePlot;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.RingPlot;
@@ -28,14 +56,35 @@ import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.category.LineAndShapeRenderer;
 import org.jfree.chart.renderer.category.StackedAreaRenderer;
 import org.jfree.chart.renderer.category.WaterfallBarRenderer;
+import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.DefaultPieDataset;
 import org.jfree.data.xy.DefaultXYDataset;
+import org.jfree.ui.RectangleInsets;
+
+import javax.swing.*;
+import java.awt.*;
+import java.util.List;
+
 
 public class FuncionArchivo {
+    
 
 
     ArrayList<Institucion> inst = new ArrayList<>();
+    private Map<String, Integer> datosAcumulativos;
+    private List<Institucion> InstitucionList;
+
+
+    public FuncionArchivo() {
+        // Inicializar datos acumulativos
+        datosAcumulativos = new HashMap<>();
+    }
+
+    public void cargarDatos(List<Institucion> datos) {
+        this.InstitucionList = datos;
+    }
+
 
     public void Leer_Archivo(String nomFile) {
         FileReader fr = null;
@@ -55,7 +104,22 @@ public class FuncionArchivo {
                 while ((linea = br.readLine()) != null) {
                     //System.out.println(fila + " - " + linea);
                     tokens = linea.split(",");
-                    inst.add(new Institucion(tokens[0], tokens[5], Integer.parseInt(tokens[1]), Integer.parseInt(tokens[2]), tokens[23], tokens[11]));
+                    inst.add(new Institucion(
+                            tokens[0], // Nombre
+                            tokens[5], // Departamento
+                            Integer.parseInt(tokens[1]), // Tipo
+                            Integer.parseInt(tokens[2]), // Caracter
+                            tokens[21], // Género
+                            tokens[11], // Nivel Académico
+                            tokens[23], // Semestre
+                            Integer.parseInt(tokens[24])// Graduados
+                            ,tokens[9] // Programa Academico
+                            ,tokens[15] // Metodologia
+                            ,tokens[17] // Area de conocimiento
+                            ,tokens[7] // Municipio
+                            ,tokens[13] // Nivel de formacion
+                            
+                    ));
                     fila++;
                 }
             } catch (Exception e) {
@@ -69,11 +133,12 @@ public class FuncionArchivo {
         }// if(!error)
     }
     
+    
     // ----------------------- LISTAR -------------------------------
     public void listar(){
         for (int i = 0; i < inst.size(); i++) {
             Institucion obj = inst.get(i);
-            System.out.println((i+1) + " " + obj.getDepto());
+            System.out.println((i+1) + " " + obj.getGraduados());
         }
     }
     
@@ -109,11 +174,9 @@ public class FuncionArchivo {
 
             switch (obj.genero) {
                 case "Hombre":
-                case "1":
                     hom++;
                     break;
                 case "Mujer":
-                case "2":
                     mujer++;
                     break;
             }
@@ -530,12 +593,75 @@ public class FuncionArchivo {
         return dataset;
     }
 
-    
+
+    public ChartPanel generarGrafGradxSemestre() {
+        DefaultCategoryDataset dataset = createDataset();
+        JFreeChart chart = ChartFactory.createBarChart(
+                "Graduados por Semestre", // Título del gráfico
+                "Semestre", // Etiqueta del eje X
+                "Cantidad de Graduados", // Etiqueta del eje Y
+                dataset,
+                PlotOrientation.VERTICAL,
+                true,
+                true,
+                false
+        );
+
+        // Ajustes visuales del gráfico
+        chart.setBackgroundPaint(new Color(120, 180, 255));
+        Font titleFont = new Font("SansSerif", Font.BOLD, 18);
+        chart.getTitle().setFont(titleFont);
+
+        CategoryPlot plot = (CategoryPlot) chart.getPlot();
+        CategoryAxis xAxis = plot.getDomainAxis();
+        xAxis.setTickLabelFont(new Font("SansSerif", Font.PLAIN, 12));
+
+        NumberAxis yAxis = (NumberAxis) plot.getRangeAxis();
+        yAxis.setTickLabelFont(new Font("SansSerif", Font.PLAIN, 12));
+
+        // Crear el panel del gráfico
+        ChartPanel chartPanel = new ChartPanel(chart);
+        chartPanel.setPreferredSize(new Dimension(512, 512));
+
+        return chartPanel;
+    }
+
+    private DefaultCategoryDataset createDataset() {
+        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+
+        try {
+            int semestre1 = 0;
+            int semestre2 = 0;
+
+            for (Institucion obj : inst) {
+                if ("1".equals(obj.getSemestre())) {
+                    semestre1 += obj.getGraduados();
+                } else if ("2".equals(obj.getSemestre())) {
+                    semestre2 += obj.getGraduados();
+                }
+            }
+
+            dataset.addValue(semestre1, "Cantidad de Graduados", "Semestre 1");
+            dataset.addValue(semestre2, "Cantidad de Graduados", "Semestre 2");
+        } catch (Exception e) {
+            e.printStackTrace(); // Maneja adecuadamente las excepciones según tus necesidades
+        }
+
+        return dataset;
+    }
+
+
+    private void eventoGenerarGraficoCombinado() {
+        
+         
+
+    }
+
     
     public static void main(String[] args) {
         FuncionArchivo obj = new FuncionArchivo();
         obj.Leer_Archivo("2022comas.csv");
-        obj.listar();
+        
      
         
        
