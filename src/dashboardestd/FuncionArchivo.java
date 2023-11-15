@@ -216,32 +216,36 @@ public class FuncionArchivo {
     }
 
     public ChartPanel generarGraficoPregPosg() {
-        int preg = 0, posg = 0;
-
-        // Lógica para contar hombres y mujeres
+        
+        int pregrado = 0, posgrado = 0;
         for (int i = 0; i < inst.size(); i++) {
             Institucion obj = inst.get(i);
 
             switch (obj.nivacademico) {
                 case "PREGRADO":
                 case "1":
-                    preg++;
+                    pregrado++;
                     break;
                 case "POSGRADO":
                 case "2":
-                    posg++;
+                    posgrado++;
                     break;
             }
         }
 
-        System.out.println("Pregrado: " + preg);
-        System.out.println("Posgrado: " + posg);
+        System.out.println("Pregrado: " + pregrado);
+        System.out.println("Posgrado: " + posgrado);
 
-        DefaultPieDataset dataset = createTipoUniDataset(preg, posg);
+        // Crear el dataset
+        CategoryDataset dataset = createTipoUniDataset(pregrado, posgrado);
 
-        JFreeChart chart = ChartFactory.createPieChart(
+        // Crear el gráfico de líneas
+        JFreeChart chart = ChartFactory.createLineChart(
                 "GRÁFICO DE PREGRADO VS POSGRADO EN EL AÑO ELEGIDO",
+                "Nivel Académico",
+                "Cantidad",
                 dataset,
+                PlotOrientation.VERTICAL,
                 true,
                 true,
                 false);
@@ -251,10 +255,9 @@ public class FuncionArchivo {
         Font titleFont = new Font("SansSerif", Font.BOLD, 18);
         chart.getTitle().setFont(titleFont);
 
-        PiePlot plot = (PiePlot) chart.getPlot();
-        plot.setLabelFont(new Font("SansSerif", Font.PLAIN, 12));
-        plot.setSectionPaint("Pregrado", Color.WHITE);
-        plot.setSectionPaint("Posgrado", Color.BLACK);
+        CategoryPlot plot = (CategoryPlot) chart.getPlot();
+        plot.getRenderer().setSeriesPaint(0, Color.RED);  // Línea de Pregrado
+        plot.getRenderer().setSeriesPaint(1, Color.BLACK);  // Línea de Posgrado
 
         // Crear el panel del gráfico
         ChartPanel chartPanel = new ChartPanel(chart);
@@ -263,10 +266,10 @@ public class FuncionArchivo {
         return chartPanel;
     }
 
-    private DefaultPieDataset createTipoUniDataset(int pregrado, int posgrado) {
-        DefaultPieDataset dataset = new DefaultPieDataset();
-        dataset.setValue("Pregrado", pregrado);
-        dataset.setValue("Posgrado", posgrado);
+    private CategoryDataset createTipoUniDataset(int pregrado, int posgrado) {
+        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+        dataset.addValue(pregrado, "Cantidad", "Pregrado");
+        dataset.addValue(posgrado, "Cantidad", "Posgrado");
 
         return dataset;
     }
@@ -589,10 +592,16 @@ public class FuncionArchivo {
     }
 
     public ChartPanel generarGrafGradxSemestre() {
-        DefaultPieDataset dataset = createDataset();
-        JFreeChart chart = ChartFactory.createPieChart(
+        
+        CategoryDataset dataset = createDataset();
+
+        // Crear el gráfico de barras apiladas en 3D
+        JFreeChart chart = ChartFactory.createStackedBarChart3D(
                 "GRADUADOS POR SEMESTRE", // Título del gráfico
+                "Semestre", // Etiqueta del eje x
+                "Cantidad de Graduados", // Etiqueta del eje y
                 dataset,
+                PlotOrientation.HORIZONTAL,
                 true,
                 true,
                 false);
@@ -602,13 +611,6 @@ public class FuncionArchivo {
         Font titleFont = new Font("SansSerif", Font.BOLD, 18);
         chart.getTitle().setFont(titleFont);
 
-        PiePlot plot = (PiePlot) chart.getPlot();
-        plot.setLabelFont(new Font("SansSerif", Font.PLAIN, 12));
-
-        // Establecer colores personalizados
-        plot.setSectionPaint("Semestre 1", Color.YELLOW);
-        plot.setSectionPaint("Semestre 2", Color.BLUE);
-
         // Crear el panel del gráfico
         ChartPanel chartPanel = new ChartPanel(chart);
         chartPanel.setPreferredSize(new Dimension(512, 512));
@@ -616,8 +618,8 @@ public class FuncionArchivo {
         return chartPanel;
     }
 
-    private DefaultPieDataset createDataset() {
-        DefaultPieDataset dataset = new DefaultPieDataset();
+    private CategoryDataset createDataset() {
+        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 
         try {
             int semestre1 = 0;
@@ -631,8 +633,8 @@ public class FuncionArchivo {
                 }
             }
 
-            dataset.setValue("Semestre 1", semestre1);
-            dataset.setValue("Semestre 2", semestre2);
+            dataset.addValue(semestre1, "Cantidad de Graduados", "Semestre 1");
+            dataset.addValue(semestre2, "Cantidad de Graduados", "Semestre 2");
         } catch (Exception e) {
             e.printStackTrace(); // Maneja adecuadamente las excepciones según tus necesidades
         }
