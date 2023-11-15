@@ -36,19 +36,32 @@ public class DashboardEstD extends JFrame {
 
     ArrayList<Institucion> inst = new ArrayList<>();
 
+    // Declara estas variables globales en tu clase
+    private boolean esPrivadaSeleccionada = false;
+    private boolean esOficialSeleccionada = false;
+    private boolean PregSelected = false;
+    private boolean PosgSelected = false;
+    private boolean PsemSelected = false;
+    private boolean SsemSelected = false;
+    private boolean metPres = false;
+    private boolean metDis = false;
+    private boolean HomSelected = false;
+    private boolean MujSelected = false;
+
     JSplitPane jsplit;
     JButton jButtones;
     JPanel izq, panelBut, panelYear, panelUni, panel2, panel3, panel4, panelDep, panel6, panelMun, panelForm, panel9,
             der, panelEsp, panelArec, panelNivForm, panelGrad;
     JPanel panel_graf1, panel_graf2, panel_graf3, panel_graf4, panel_graf5, panel_graf6, panel_graf7, panel_graf8,
-            panel_graf9, panel_graf10cal, panelPro;// cambiar por ChartPanel
+            panel_graf9, panel_graf10cal, panelPro, panel_graf10, panel_graf11, panel_graf12, panel_graf13, panel_graf14, panel_graf15, panel_graf16, 
+            panel_graf17, panel_graf18, panel_graf19, panel_graf20;// cambiar por ChartPanel
     JComboBox<String> jcpUni, jcpYear, jcP2, jcpDep, jcP5, jcpMun, jcpForm, jcPro, jcEsp, jcArec, jcNivForm, jcGrad;
     JCheckBox jck1_P2, jck2_P2, jckPriv, jckOfic, jck3_P3, jck1_P4, jck2_P4, jck1_sem, jck2_sem, jckPreg, jckPosg,
             jckHom, jckMuj;
     JLabel jlImagen1, jlImagen2;
 
     public DashboardEstD() {
-        super("Ejemplo de JSplitPane");
+        super("DASHBOARD ESTRUCTURA DE DATOS");
         setSize(1200, 700);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setLocationRelativeTo(null);
@@ -73,7 +86,7 @@ public class DashboardEstD extends JFrame {
         JComponent topTextArea = new JTextArea(
                 "PROGRAMADORES \n Santiago Martinez Serna.\n Laura Sofica Toro. \n Santiago Santacruz Cuellar\n\n GRAFICAS EGRESADOS COLOMBIA: Seleccione datos a consultar\n ");
         topTextArea.setOpaque(false);
-        topTextArea.setForeground(Color.white);
+        topTextArea.setForeground(Color.CYAN);
         topTextArea.setFocusable(false);
         ((JTextArea) topTextArea).setLineWrap(true);
         ((JTextArea) topTextArea).setWrapStyleWord(true);
@@ -84,8 +97,9 @@ public class DashboardEstD extends JFrame {
 
         der = new JPanel();
         der.setLayout(null);
-        der.setPreferredSize(new Dimension(1500, 1500)); // tamaño del jpanel der para mostrar las graficas
         der.setBackground(Color.BLACK);
+        der.setPreferredSize(new Dimension(5000, 5000)); // tamaño del jpanel der para mostrar las graficas
+
 
         // Resto del código (paneles de gráficos, etc.)
 
@@ -174,13 +188,65 @@ public class DashboardEstD extends JFrame {
         panelMun.setBounds(280, 150, 130, 50);// coord con respecto al panel izq
         panelMun.setBorder(new TitledBorder("Municipio"));
         jcpMun = new JComboBox<>();
+
+        jcpMun.addItem("Tulua");
+        jcpMun.addItem("Guadalajara de Buga");
+        jcpMun.addItem("BogotaD.C");
+        jcpMun.addItem("Medellin");
         jcpMun.addItem("Cali");
         jcpMun.addItem("Armenia");
         jcpMun.addItem("Neiva");
         jcpMun.addItem("Palmira");
+        jcpMun.addItem("Barranquilla");
+        jcpMun.addItem("Bucaramanga");
+        jcpMun.addItem("Cartagena");
+        jcpMun.addItem("Cucuta");
+        jcpMun.addItem("Manizales");
+        jcpMun.addItem("Pereira");
+        jcpMun.addItem("Tunja");
+        jcpMun.addItem("Popayan");
+        jcpMun.addItem("Sogamoso");
+        jcpMun.addItem("Monteria");
+        jcpMun.addItem("Neiva");
+        jcpMun.addItem("Florencia");
+        jcpMun.addItem("Riohacha");
+        jcpMun.addItem("Quibdo");
+        jcpMun.addItem("Villavicencio");
+        jcpMun.addItem("Valledupar");
+        jcpMun.addItem("Buenaventura");
+        jcpMun.addItem("Aguachica");
+        jcpMun.addItem("Leticia");
+        jcpMun.addItem("Cartagena de Indias");
+        jcpMun.addItem("San Andres");
+        jcpMun.addItem("Pasto");
+        jcpMun.addItem("Ibague");
+        jcpMun.addItem("San Jose de Cucuta");
+        jcpMun.addItem("Santa Marta");
+        jcpMun.addItem("Pamplona");
+        jcpMun.addItem("Fusagasuga");
+        jcpMun.addItem("Puerto Colombia");
+        jcpMun.addItem("Riohacha");
+        jcpMun.addItem("El Carmen de Viboral");
+        jcpMun.addItem("Andes");
+        jcpMun.addItem("Caucasia");
+        jcpMun.addItem("Cerete");
+        jcpMun.addItem("Rivera");
+        jcpMun.addItem("Turbo");
+        jcpMun.addItem("Santa Rosa de Osos");
+        jcpMun.addItem("Sincelejo");
+        jcpMun.addItem("Espinal");
+        jcpMun.addItem("San Juan del Cesar");
+        jcpMun.addItem("Roldanillo");
+        jcpMun.addItem("Honda");
         jcpMun.addItem("Bello");
+        jcpMun.addItem("Monteria");
+        jcpMun.addItem("Envigado");
+        jcpMun.addItem("Yopal");
+        jcpMun.addItem("Cienaga");
+        jcpMun.addItem("Espinal");
 
-        jcpMun.addItem("ETC...");
+        // FALTA AGREGAR BOTONES
+
         jcpMun.setBounds(15, 17, 100, 25);// coord con respecto al panel panelUni
         panelMun.add(jcpMun);
         izq.add(panelMun);
@@ -264,10 +330,6 @@ public class DashboardEstD extends JFrame {
         jcpForm.addItem("Institucion Universitaria/Escuela Tecnologica");
         jcpForm.addItem("Institucion Tecnica Profesional");
 
-
-       
-
-       
         jcpForm.setBounds(15, 17, 240, 25);// coord con respecto al panel panelUni
         panelForm.add(jcpForm);
         izq.add(panelForm);
@@ -350,12 +412,6 @@ public class DashboardEstD extends JFrame {
         jcPro.addItem("DOCTORADO EN CIENCIAS - QUIMICA");
         jcPro.addItem("ARTES PLASTICAS");
 
-
-        
-
-
-
-
         jcPro.setBounds(15, 17, 240, 25);// coord con respecto al panel panelUni
         panelPro.add(jcPro);
         izq.add(panelPro);
@@ -379,7 +435,7 @@ public class DashboardEstD extends JFrame {
         jcEsp.addItem("Agropecuario");
         jcEsp.addItem("Veterinaria");
         jcEsp.addItem("Salud");
-        jcEsp.addItem("Artes"); 
+        jcEsp.addItem("Artes");
         jcEsp.addItem("Ciencias sociales y del comportamiento");
         jcEsp.addItem("Humanidades (Excepto idiomas)");
         jcEsp.addItem("Derecho");
@@ -388,13 +444,6 @@ public class DashboardEstD extends JFrame {
         jcEsp.addItem("Ciencias biologicas y afines");
         jcEsp.addItem("Ciencias físicas");
         jcEsp.addItem("Matematicas y estadistica");
-
-
-
-
-
-
-        // Falta por agregar campos especificos
         jcEsp.setBounds(15, 17, 240, 25);// coord con respecto al panel panelUni
         panelEsp.add(jcEsp);
         izq.add(panelEsp);
@@ -470,8 +519,8 @@ public class DashboardEstD extends JFrame {
         panelGrad.setBounds(10, 510, 260, 50);// coord con respecto al panel izq
         panelGrad.setBorder(new TitledBorder("Tener en cuenta Graduados"));
         jcGrad = new JComboBox<>();
-        jcGrad.addItem("Si");
         jcGrad.addItem("No");
+        jcGrad.addItem("Si");
         jcGrad.setBounds(15, 17, 240, 25);// coord con respecto al panel panelUni
         panelGrad.add(jcGrad);
         izq.add(panelGrad);
@@ -503,14 +552,15 @@ public class DashboardEstD extends JFrame {
         ItemListener itemListener = new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
-
                 if (e.getStateChange() == ItemEvent.SELECTED) {
                     // Desmarcar el otro JCheckBox si se selecciona uno
-                    String iesPriv = (String) jckPriv.getText();
-                    String iesOfi = (String) jckOfic.getText();
                     if (e.getItem().equals(jckPriv)) {
+                        esPrivadaSeleccionada = true;
+                        esOficialSeleccionada = false;
                         jckOfic.setSelected(false);
                     } else if (e.getItem().equals(jckOfic)) {
+                        esPrivadaSeleccionada = false;
+                        esOficialSeleccionada = true;
                         jckPriv.setSelected(false);
                     }
                     ((JCheckBox) e.getItem()).setEnabled(false);
@@ -526,9 +576,9 @@ public class DashboardEstD extends JFrame {
         panel3.setBackground(Color.WHITE);
         panel3.setBounds(10, 330, 260, 50);// coord con respecto al panel izq
         panel3.setBorder(new TitledBorder("Nivel Academico"));
-        jckPreg = new JCheckBox("Pregrado");
+        jckPreg = new JCheckBox("PREGRADO");
         jckPreg.setBounds(15, 17, 100, 25);// coord con respecto al panel2
-        jckPosg = new JCheckBox("Posgrado");
+        jckPosg = new JCheckBox("POSGRADO");
         jckPosg.setBounds(120, 17, 100, 25);// coord con respecto al panel2
         panel3.add(jckPreg);
         panel3.add(jckPosg);
@@ -539,12 +589,13 @@ public class DashboardEstD extends JFrame {
             public void itemStateChanged(ItemEvent e) {
                 if (e.getStateChange() == ItemEvent.SELECTED) {
                     // Desmarcar el otro JCheckBox si se selecciona uno
-                    String NivPreg = (String) jckPreg.getText();
-                    String NivPosg = (String) jckPosg.getText();
-
                     if (e.getItem().equals(jckPreg)) {
+                        PregSelected = true;
+                        PosgSelected = false;
                         jckPosg.setSelected(false);
                     } else if (e.getItem().equals(jckPosg)) {
+                        PregSelected = false;
+                        PosgSelected = true;
                         jckPreg.setSelected(false);
                     }
                     ((JCheckBox) e.getItem()).setEnabled(false);
@@ -567,26 +618,22 @@ public class DashboardEstD extends JFrame {
         panel6.add(jck1_sem);
         panel6.add(jck2_sem);
         izq.add(panel6);
-
         ItemListener itemListenerPanel6 = new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
                 if (e.getStateChange() == ItemEvent.SELECTED) {
                     // Desmarcar el otro JCheckBox si se selecciona uno
-
-                    String sem1 = (String) jck1_sem.getText();
-                    String sem2 = (String) jck2_sem.getText();
-
                     if (e.getItem().equals(jck1_sem)) {
+                        SsemSelected = false;
                         jck2_sem.setSelected(false);
                     } else if (e.getItem().equals(jck2_sem)) {
+                        SsemSelected = false;
                         jck1_sem.setSelected(false);
                     }
                     ((JCheckBox) e.getItem()).setEnabled(false);
                 }
             }
         };
-
         jck1_sem.addItemListener(itemListenerPanel6);
         jck2_sem.addItemListener(itemListenerPanel6);
 
@@ -597,30 +644,27 @@ public class DashboardEstD extends JFrame {
         panel9.setBorder(new TitledBorder("Metodologia"));
         jck1_P4 = new JCheckBox("Presencial");
         jck1_P4.setBounds(15, 17, 100, 25);// coord con respecto al panel2
-        jck2_P4 = new JCheckBox("Distancia");
-        jck2_P4.setBounds(120, 17, 100, 25);// coord con respecto al panel2
+        jck2_P4 = new JCheckBox("Distancia (tradicional)");
+        jck2_P4.setBounds(120, 17, 200, 25);// coord con respecto al panel2
         panel9.add(jck1_P4);
         panel9.add(jck2_P4);
         izq.add(panel9);
-
         ItemListener itemListenerPanel9 = new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
                 if (e.getStateChange() == ItemEvent.SELECTED) {
-
-                    String metPres = (String) jck1_P4.getText();
-                    String metDist = (String) jck2_P4.getText();
                     // Desmarcar el otro JCheckBox si se selecciona uno
                     if (e.getItem().equals(jck1_P4)) {
+                        metDis = false;
                         jck2_P4.setSelected(false);
                     } else if (e.getItem().equals(jck2_P4)) {
+                        metPres = false;
                         jck1_P4.setSelected(false);
                     }
                     ((JCheckBox) e.getItem()).setEnabled(false);
                 }
             }
         };
-
         jck1_P4.addItemListener(itemListenerPanel9);
         jck2_P4.addItemListener(itemListenerPanel9);
 
@@ -636,27 +680,22 @@ public class DashboardEstD extends JFrame {
         panel2.add(jckHom);
         panel2.add(jckMuj);
         izq.add(panel2);
-
         ItemListener itemListenerPanel2 = new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
                 if (e.getStateChange() == ItemEvent.SELECTED) {
-
-                    String sexoHom = (String) jckHom.getText();
-                    String sexoMuj = (String) jckMuj.getText();
-
                     // Desmarcar el otro JCheckBox si se selecciona uno
                     if (e.getItem().equals(jckHom)) {
+                        MujSelected = false;
                         jckMuj.setSelected(false);
                     } else if (e.getItem().equals(jckMuj)) {
+                        HomSelected = false;
                         jckHom.setSelected(false);
                     }
-
                     ((JCheckBox) e.getItem()).setEnabled(false);
                 }
             }
         };
-
         jckHom.addItemListener(itemListenerPanel2);
         jckMuj.addItemListener(itemListenerPanel2);
 
@@ -758,7 +797,7 @@ public class DashboardEstD extends JFrame {
         panelBut.setLayout(null);
         panelBut.setBackground(Color.WHITE);
         panelBut.setBounds(10, 600, 260, 50);
-        panelBut.setBorder(new TitledBorder("Grafico Combinado"));
+        panelBut.setBorder(new TitledBorder("Grafico Combinado 1"));
         jButtones = new JButton("Graficar");
         jButtones.setBounds(15, 17, 240, 25);
         panelBut.add(jButtones);
@@ -767,10 +806,183 @@ public class DashboardEstD extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                eventoGenerarGraficoCombinado();
+                eventoGenerarGraficoCombinado1();
 
             }
         });
+
+        panelBut = new JPanel();
+        panelBut.setLayout(null);
+        panelBut.setBackground(Color.WHITE);
+        panelBut.setBounds(10, 660, 260, 50);
+        panelBut.setBorder(new TitledBorder("Grafico Combinado 2"));
+        jButtones = new JButton("Graficar");
+        jButtones.setBounds(15, 17, 240, 25);
+        panelBut.add(jButtones);
+        izq.add(panelBut); // Cambiar panelForm por panelBut
+        jButtones.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                eventoGenerarGraficoCombinado2();
+
+            }
+        });
+
+        
+        panelBut = new JPanel();
+        panelBut.setLayout(null);
+        panelBut.setBackground(Color.WHITE);
+        panelBut.setBounds(10, 720, 260, 50);
+        panelBut.setBorder(new TitledBorder("Grafico Combinado 3"));
+        jButtones = new JButton("Graficar");
+        jButtones.setBounds(15, 17, 240, 25);
+        panelBut.add(jButtones);
+        izq.add(panelBut); // Cambiar panelForm por panelBut
+        jButtones.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                eventoGenerarGraficoCombinado3();
+
+            }
+        });
+
+        
+        panelBut = new JPanel();
+        panelBut.setLayout(null);
+        panelBut.setBackground(Color.WHITE);
+        panelBut.setBounds(10, 780, 260, 50);
+        panelBut.setBorder(new TitledBorder("Grafico Combinado 4"));
+        jButtones = new JButton("Graficar");
+        jButtones.setBounds(15, 17, 240, 25);
+        panelBut.add(jButtones);
+        izq.add(panelBut); // Cambiar panelForm por panelBut
+        jButtones.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                eventoGenerarGraficoCombinado4();
+
+            }
+        });
+
+        
+        panelBut = new JPanel();
+        panelBut.setLayout(null);
+        panelBut.setBackground(Color.WHITE);
+        panelBut.setBounds(10, 840, 260, 50);
+        panelBut.setBorder(new TitledBorder("Grafico Combinado 5"));
+        jButtones = new JButton("Graficar");
+        jButtones.setBounds(15, 17, 240, 25);
+        panelBut.add(jButtones);
+        izq.add(panelBut); // Cambiar panelForm por panelBut
+        jButtones.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                eventoGenerarGraficoCombinado5();
+
+            }
+        });
+
+
+        
+        panelBut = new JPanel();
+        panelBut.setLayout(null);
+        panelBut.setBackground(Color.WHITE);
+        panelBut.setBounds(10, 900, 260, 50);
+        panelBut.setBorder(new TitledBorder("Grafico Combinado 6"));
+        jButtones = new JButton("Graficar");
+        jButtones.setBounds(15, 17, 240, 25);
+        panelBut.add(jButtones);
+        izq.add(panelBut); // Cambiar panelForm por panelBut
+        jButtones.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                eventoGenerarGraficoCombinado6();
+
+            }
+        });
+
+        
+        panelBut = new JPanel();
+        panelBut.setLayout(null);
+        panelBut.setBackground(Color.WHITE);
+        panelBut.setBounds(10, 960, 260, 50);
+        panelBut.setBorder(new TitledBorder("Grafico Combinado 7"));
+        jButtones = new JButton("Graficar");
+        jButtones.setBounds(15, 17, 240, 25);
+        panelBut.add(jButtones);
+        izq.add(panelBut); // Cambiar panelForm por panelBut
+        jButtones.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                eventoGenerarGraficoCombinado7();
+
+            }
+        });
+
+        
+        panelBut = new JPanel();
+        panelBut.setLayout(null);
+        panelBut.setBackground(Color.WHITE);
+        panelBut.setBounds(280, 660, 260, 50);
+        panelBut.setBorder(new TitledBorder("Grafico Combinado 8"));
+        jButtones = new JButton("Graficar");
+        jButtones.setBounds(15, 17, 240, 25);
+        panelBut.add(jButtones);
+        izq.add(panelBut); // Cambiar panelForm por panelBut
+        jButtones.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                eventoGenerarGraficoCombinado8();
+
+            }
+        });
+
+        
+        panelBut = new JPanel();
+        panelBut.setLayout(null);
+        panelBut.setBackground(Color.WHITE);
+        panelBut.setBounds(280, 720, 260, 50);
+        panelBut.setBorder(new TitledBorder("Grafico Combinado 9"));
+        jButtones = new JButton("Graficar");
+        jButtones.setBounds(15, 17, 240, 25);
+        panelBut.add(jButtones);
+        izq.add(panelBut); // Cambiar panelForm por panelBut
+        jButtones.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                eventoGenerarGraficoCombinado9();
+
+            }
+        });
+
+        
+        panelBut = new JPanel();
+        panelBut.setLayout(null);
+        panelBut.setBackground(Color.WHITE);
+        panelBut.setBounds(280, 780, 260, 50);
+        panelBut.setBorder(new TitledBorder("Grafico Combinado 10"));
+        jButtones = new JButton("Graficar");
+        jButtones.setBounds(15, 17, 240, 25);
+        panelBut.add(jButtones);
+        izq.add(panelBut); // Cambiar panelForm por panelBut
+        jButtones.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                eventoGenerarGraficoCombinado10();
+
+            }
+        });
+
+
 
         panelBut = new JPanel();
         panelBut.setLayout(null);
@@ -839,6 +1051,85 @@ public class DashboardEstD extends JFrame {
         panel_graf7.setBackground(Color.GREEN);
         panel_graf7.setBounds(1054, 10, 512, 512);
         der.add(panel_graf7);
+
+        panel_graf8 = new JPanel();// esto seria el ChartPanel de la grafica 4
+        panel_graf8.setLayout(null);
+        panel_graf8.setBackground(Color.PINK);
+        panel_graf8.setBounds(1054, 532, 512, 512);
+        der.add(panel_graf8);
+
+        panel_graf9 = new JPanel();// esto seria el ChartPanel de la grafica 4
+        panel_graf9.setLayout(null);
+        panel_graf9.setBackground(Color.ORANGE);
+        panel_graf9.setBounds(1054, 1064, 512, 512);
+        der.add(panel_graf9);
+
+        panel_graf10 = new JPanel();// esto seria el ChartPanel de la grafica 4
+        panel_graf10.setLayout(null);
+        panel_graf10.setBackground(Color.MAGENTA);
+        panel_graf10.setBounds(1576, 10, 512, 512);
+        der.add(panel_graf10);
+
+        panel_graf11 = new JPanel();// esto seria el ChartPanel de la grafica 4
+        panel_graf11.setLayout(null);
+        panel_graf11.setBackground(Color.BLUE);
+        panel_graf11.setBounds(1576, 532, 512, 512);
+        der.add(panel_graf11);
+
+        panel_graf12 = new JPanel();// esto seria el ChartPanel de la grafica 4
+        panel_graf12.setLayout(null);
+        panel_graf12.setBackground(Color.WHITE);
+        panel_graf12.setBounds(1576, 1064, 512, 512);
+        der.add(panel_graf12);
+
+        panel_graf13 = new JPanel();// esto seria el ChartPanel de la grafica 4
+        panel_graf13.setLayout(null);
+        panel_graf13.setBackground(Color.LIGHT_GRAY);
+        panel_graf13.setBounds(10, 1586, 512, 512);
+        der.add(panel_graf13);
+
+        panel_graf14 = new JPanel();// esto seria el ChartPanel de la grafica 4
+        panel_graf14.setLayout(null);
+        panel_graf14.setBackground(Color.CYAN);
+        panel_graf14.setBounds(532, 1586, 512, 512);
+        der.add(panel_graf14);
+
+        panel_graf15 = new JPanel();// esto seria el ChartPanel de la grafica 4
+        panel_graf15.setLayout(null);
+        panel_graf15.setBackground(Color.YELLOW);
+        panel_graf15.setBounds(1054, 1586, 512, 512);
+        der.add(panel_graf15);
+
+        panel_graf16 = new JPanel();// esto seria el ChartPanel de la grafica 4
+        panel_graf16.setLayout(null);
+        panel_graf16.setBackground(Color.RED);
+        panel_graf16.setBounds(1576, 1586, 512, 512);
+        der.add(panel_graf16);
+
+        panel_graf17 = new JPanel();// esto seria el ChartPanel de la grafica 4
+        panel_graf17.setLayout(null);
+        panel_graf17.setBackground(Color.DARK_GRAY);
+        panel_graf17.setBounds(10, 2110, 512, 512);
+        der.add(panel_graf17);
+
+        panel_graf18 = new JPanel();// esto seria el ChartPanel de la grafica 4
+        panel_graf18.setLayout(null);
+        panel_graf18.setBackground(Color.GREEN);
+        panel_graf18.setBounds(532, 2110, 512, 512);
+        der.add(panel_graf18);
+
+
+
+
+
+
+
+        
+
+
+
+
+
 
         /*
          * .....
@@ -1137,7 +1428,7 @@ public class DashboardEstD extends JFrame {
 
     }
 
-    private void eventoGenerarGraficoCombinado() {
+    private void eventoGenerarGraficoCombinado1() {
 
         FuncionArchivo funcionArchivo = new FuncionArchivo();
 
@@ -1164,19 +1455,569 @@ public class DashboardEstD extends JFrame {
         String selectedCaracter = (String) jcpForm.getSelectedItem();
         String selectedProgAcademico = (String) jcPro.getSelectedItem();
         String selectedAreaConoc = (String) jcArec.getSelectedItem();
+        String selectedOpcGraduados = (String) jcGrad.getSelectedItem();
+
+        // Obtener el estado de los checkboxes
+        boolean esPrivadaSeleccionada = jckPriv.isSelected();
+        boolean esOficialSeleccionada = jckOfic.isSelected();
+        boolean PregSelected = jckPreg.isSelected();
+        boolean PosgSelected = jckPosg.isSelected();
+        boolean PsemSelected = jck1_sem.isSelected();
+        boolean SsemSelected = jck2_sem.isSelected();
+        boolean metPres = jck1_P4.isSelected();
+        boolean metDis = jck2_P4.isSelected();
+        boolean HomSelected = jckHom.isSelected();
+        boolean MujSelected = jckMuj.isSelected();
 
         // Llama al método que genera el gráfico
-        ChartPanel chartPanel = funcionArchivo.generarGraficoCampoEspecifico(selectedCampoEsp, selectedMun,
-                selectedNivForm, selectedDepto, selectedUni, selectedCaracter, selectedProgAcademico, selectedAreaConoc);
+        ChartPanel chartPanel = funcionArchivo.generarGraficoGeneral(selectedCampoEsp, selectedMun,
+                selectedNivForm, selectedDepto, selectedUni, selectedCaracter, selectedProgAcademico, selectedAreaConoc,
+                esPrivadaSeleccionada,
+                esOficialSeleccionada, PregSelected, PosgSelected, PsemSelected, SsemSelected, metPres, metDis,
+                HomSelected, MujSelected, selectedOpcGraduados);
 
         // Limpia el panel de gráficos antes de agregar uno nuevo
+            // Limpia el panel de gráficos antes de agregar uno nuevo
         panel_graf7.removeAll();
         panel_graf7.setLayout(new BorderLayout()); // Usar un BorderLayout
         panel_graf7.add(chartPanel, BorderLayout.CENTER);
         panel_graf7.revalidate();
         panel_graf7.repaint();
+        
 
     }
+
+    
+    private void eventoGenerarGraficoCombinado2() {
+
+        FuncionArchivo funcionArchivo = new FuncionArchivo();
+
+        String selectedYear = (String) jcpYear.getSelectedItem();
+        switch (selectedYear) {
+            case "2020":
+                funcionArchivo.Leer_Archivo("2020comas.csv");
+                break;
+            case "2021":
+                funcionArchivo.Leer_Archivo("2021comas.csv");
+                break;
+            case "2022":
+                funcionArchivo.Leer_Archivo("2022comas.csv");
+                break;
+            default:
+                throw new AssertionError();
+        }
+
+        String selectedCampoEsp = (String) jcEsp.getSelectedItem();
+        String selectedMun = (String) jcpMun.getSelectedItem();
+        String selectedNivForm = (String) jcNivForm.getSelectedItem();
+        String selectedDepto = (String) jcpDep.getSelectedItem();
+        String selectedUni = (String) jcpUni.getSelectedItem();
+        String selectedCaracter = (String) jcpForm.getSelectedItem();
+        String selectedProgAcademico = (String) jcPro.getSelectedItem();
+        String selectedAreaConoc = (String) jcArec.getSelectedItem();
+        String selectedOpcGraduados = (String) jcGrad.getSelectedItem();
+
+        // Obtener el estado de los checkboxes
+        boolean esPrivadaSeleccionada = jckPriv.isSelected();
+        boolean esOficialSeleccionada = jckOfic.isSelected();
+        boolean PregSelected = jckPreg.isSelected();
+        boolean PosgSelected = jckPosg.isSelected();
+        boolean PsemSelected = jck1_sem.isSelected();
+        boolean SsemSelected = jck2_sem.isSelected();
+        boolean metPres = jck1_P4.isSelected();
+        boolean metDis = jck2_P4.isSelected();
+        boolean HomSelected = jckHom.isSelected();
+        boolean MujSelected = jckMuj.isSelected();
+
+        // Llama al método que genera el gráfico
+        ChartPanel chartPanel = funcionArchivo.generarGraficoGeneral(selectedCampoEsp, selectedMun,
+                selectedNivForm, selectedDepto, selectedUni, selectedCaracter, selectedProgAcademico, selectedAreaConoc,
+                esPrivadaSeleccionada,
+                esOficialSeleccionada, PregSelected, PosgSelected, PsemSelected, SsemSelected, metPres, metDis,
+                HomSelected, MujSelected, selectedOpcGraduados);
+
+    
+
+        panel_graf8.removeAll();
+        panel_graf8.setLayout(new BorderLayout()); // Usar un BorderLayout
+        panel_graf8.add(chartPanel, BorderLayout.CENTER);
+        panel_graf8.revalidate();
+        panel_graf8.repaint();
+
+    }
+
+    
+    private void eventoGenerarGraficoCombinado3() {
+
+        FuncionArchivo funcionArchivo = new FuncionArchivo();
+
+        String selectedYear = (String) jcpYear.getSelectedItem();
+        switch (selectedYear) {
+            case "2020":
+                funcionArchivo.Leer_Archivo("2020comas.csv");
+                break;
+            case "2021":
+                funcionArchivo.Leer_Archivo("2021comas.csv");
+                break;
+            case "2022":
+                funcionArchivo.Leer_Archivo("2022comas.csv");
+                break;
+            default:
+                throw new AssertionError();
+        }
+
+        String selectedCampoEsp = (String) jcEsp.getSelectedItem();
+        String selectedMun = (String) jcpMun.getSelectedItem();
+        String selectedNivForm = (String) jcNivForm.getSelectedItem();
+        String selectedDepto = (String) jcpDep.getSelectedItem();
+        String selectedUni = (String) jcpUni.getSelectedItem();
+        String selectedCaracter = (String) jcpForm.getSelectedItem();
+        String selectedProgAcademico = (String) jcPro.getSelectedItem();
+        String selectedAreaConoc = (String) jcArec.getSelectedItem();
+        String selectedOpcGraduados = (String) jcGrad.getSelectedItem();
+
+        // Obtener el estado de los checkboxes
+        boolean esPrivadaSeleccionada = jckPriv.isSelected();
+        boolean esOficialSeleccionada = jckOfic.isSelected();
+        boolean PregSelected = jckPreg.isSelected();
+        boolean PosgSelected = jckPosg.isSelected();
+        boolean PsemSelected = jck1_sem.isSelected();
+        boolean SsemSelected = jck2_sem.isSelected();
+        boolean metPres = jck1_P4.isSelected();
+        boolean metDis = jck2_P4.isSelected();
+        boolean HomSelected = jckHom.isSelected();
+        boolean MujSelected = jckMuj.isSelected();
+
+        // Llama al método que genera el gráfico
+        ChartPanel chartPanel = funcionArchivo.generarGraficoGeneral(selectedCampoEsp, selectedMun,
+                selectedNivForm, selectedDepto, selectedUni, selectedCaracter, selectedProgAcademico, selectedAreaConoc,
+                esPrivadaSeleccionada,
+                esOficialSeleccionada, PregSelected, PosgSelected, PsemSelected, SsemSelected, metPres, metDis,
+                HomSelected, MujSelected, selectedOpcGraduados);
+
+        // Limpia el panel de gráficos antes de agregar uno nuevo
+        panel_graf9.removeAll();
+        panel_graf9.setLayout(new BorderLayout()); // Usar un BorderLayout
+        panel_graf9.add(chartPanel, BorderLayout.CENTER);
+        panel_graf9.revalidate();
+        panel_graf9.repaint();
+
+    }
+
+    
+    private void eventoGenerarGraficoCombinado4() {
+
+        FuncionArchivo funcionArchivo = new FuncionArchivo();
+
+        String selectedYear = (String) jcpYear.getSelectedItem();
+        switch (selectedYear) {
+            case "2020":
+                funcionArchivo.Leer_Archivo("2020comas.csv");
+                break;
+            case "2021":
+                funcionArchivo.Leer_Archivo("2021comas.csv");
+                break;
+            case "2022":
+                funcionArchivo.Leer_Archivo("2022comas.csv");
+                break;
+            default:
+                throw new AssertionError();
+        }
+
+        String selectedCampoEsp = (String) jcEsp.getSelectedItem();
+        String selectedMun = (String) jcpMun.getSelectedItem();
+        String selectedNivForm = (String) jcNivForm.getSelectedItem();
+        String selectedDepto = (String) jcpDep.getSelectedItem();
+        String selectedUni = (String) jcpUni.getSelectedItem();
+        String selectedCaracter = (String) jcpForm.getSelectedItem();
+        String selectedProgAcademico = (String) jcPro.getSelectedItem();
+        String selectedAreaConoc = (String) jcArec.getSelectedItem();
+        String selectedOpcGraduados = (String) jcGrad.getSelectedItem();
+
+        // Obtener el estado de los checkboxes
+        boolean esPrivadaSeleccionada = jckPriv.isSelected();
+        boolean esOficialSeleccionada = jckOfic.isSelected();
+        boolean PregSelected = jckPreg.isSelected();
+        boolean PosgSelected = jckPosg.isSelected();
+        boolean PsemSelected = jck1_sem.isSelected();
+        boolean SsemSelected = jck2_sem.isSelected();
+        boolean metPres = jck1_P4.isSelected();
+        boolean metDis = jck2_P4.isSelected();
+        boolean HomSelected = jckHom.isSelected();
+        boolean MujSelected = jckMuj.isSelected();
+
+        // Llama al método que genera el gráfico
+        ChartPanel chartPanel = funcionArchivo.generarGraficoGeneral(selectedCampoEsp, selectedMun,
+                selectedNivForm, selectedDepto, selectedUni, selectedCaracter, selectedProgAcademico, selectedAreaConoc,
+                esPrivadaSeleccionada,
+                esOficialSeleccionada, PregSelected, PosgSelected, PsemSelected, SsemSelected, metPres, metDis,
+                HomSelected, MujSelected, selectedOpcGraduados);
+
+        // Limpia el panel de gráficos antes de agregar uno nuevo
+        panel_graf10.removeAll();
+        panel_graf10.setLayout(new BorderLayout()); // Usar un BorderLayout
+        panel_graf10.add(chartPanel, BorderLayout.CENTER);
+        panel_graf10.revalidate();
+        panel_graf10.repaint();
+
+    }
+
+    
+    private void eventoGenerarGraficoCombinado5() {
+
+        FuncionArchivo funcionArchivo = new FuncionArchivo();
+
+        String selectedYear = (String) jcpYear.getSelectedItem();
+        switch (selectedYear) {
+            case "2020":
+                funcionArchivo.Leer_Archivo("2020comas.csv");
+                break;
+            case "2021":
+                funcionArchivo.Leer_Archivo("2021comas.csv");
+                break;
+            case "2022":
+                funcionArchivo.Leer_Archivo("2022comas.csv");
+                break;
+            default:
+                throw new AssertionError();
+        }
+
+        String selectedCampoEsp = (String) jcEsp.getSelectedItem();
+        String selectedMun = (String) jcpMun.getSelectedItem();
+        String selectedNivForm = (String) jcNivForm.getSelectedItem();
+        String selectedDepto = (String) jcpDep.getSelectedItem();
+        String selectedUni = (String) jcpUni.getSelectedItem();
+        String selectedCaracter = (String) jcpForm.getSelectedItem();
+        String selectedProgAcademico = (String) jcPro.getSelectedItem();
+        String selectedAreaConoc = (String) jcArec.getSelectedItem();
+        String selectedOpcGraduados = (String) jcGrad.getSelectedItem();
+
+        // Obtener el estado de los checkboxes
+        boolean esPrivadaSeleccionada = jckPriv.isSelected();
+        boolean esOficialSeleccionada = jckOfic.isSelected();
+        boolean PregSelected = jckPreg.isSelected();
+        boolean PosgSelected = jckPosg.isSelected();
+        boolean PsemSelected = jck1_sem.isSelected();
+        boolean SsemSelected = jck2_sem.isSelected();
+        boolean metPres = jck1_P4.isSelected();
+        boolean metDis = jck2_P4.isSelected();
+        boolean HomSelected = jckHom.isSelected();
+        boolean MujSelected = jckMuj.isSelected();
+
+        // Llama al método que genera el gráfico
+        ChartPanel chartPanel = funcionArchivo.generarGraficoGeneral(selectedCampoEsp, selectedMun,
+                selectedNivForm, selectedDepto, selectedUni, selectedCaracter, selectedProgAcademico, selectedAreaConoc,
+                esPrivadaSeleccionada,
+                esOficialSeleccionada, PregSelected, PosgSelected, PsemSelected, SsemSelected, metPres, metDis,
+                HomSelected, MujSelected, selectedOpcGraduados);
+
+        // Limpia el panel de gráficos antes de agregar uno nuevo
+        panel_graf11.removeAll();
+        panel_graf11.setLayout(new BorderLayout()); // Usar un BorderLayout
+        panel_graf11.add(chartPanel, BorderLayout.CENTER);
+        panel_graf11.revalidate();
+        panel_graf11.repaint();
+
+    }
+
+    
+    private void eventoGenerarGraficoCombinado6() {
+
+        FuncionArchivo funcionArchivo = new FuncionArchivo();
+
+        String selectedYear = (String) jcpYear.getSelectedItem();
+        switch (selectedYear) {
+            case "2020":
+                funcionArchivo.Leer_Archivo("2020comas.csv");
+                break;
+            case "2021":
+                funcionArchivo.Leer_Archivo("2021comas.csv");
+                break;
+            case "2022":
+                funcionArchivo.Leer_Archivo("2022comas.csv");
+                break;
+            default:
+                throw new AssertionError();
+        }
+
+        String selectedCampoEsp = (String) jcEsp.getSelectedItem();
+        String selectedMun = (String) jcpMun.getSelectedItem();
+        String selectedNivForm = (String) jcNivForm.getSelectedItem();
+        String selectedDepto = (String) jcpDep.getSelectedItem();
+        String selectedUni = (String) jcpUni.getSelectedItem();
+        String selectedCaracter = (String) jcpForm.getSelectedItem();
+        String selectedProgAcademico = (String) jcPro.getSelectedItem();
+        String selectedAreaConoc = (String) jcArec.getSelectedItem();
+        String selectedOpcGraduados = (String) jcGrad.getSelectedItem();
+
+        // Obtener el estado de los checkboxes
+        boolean esPrivadaSeleccionada = jckPriv.isSelected();
+        boolean esOficialSeleccionada = jckOfic.isSelected();
+        boolean PregSelected = jckPreg.isSelected();
+        boolean PosgSelected = jckPosg.isSelected();
+        boolean PsemSelected = jck1_sem.isSelected();
+        boolean SsemSelected = jck2_sem.isSelected();
+        boolean metPres = jck1_P4.isSelected();
+        boolean metDis = jck2_P4.isSelected();
+        boolean HomSelected = jckHom.isSelected();
+        boolean MujSelected = jckMuj.isSelected();
+
+        // Llama al método que genera el gráfico
+        ChartPanel chartPanel = funcionArchivo.generarGraficoGeneral(selectedCampoEsp, selectedMun,
+                selectedNivForm, selectedDepto, selectedUni, selectedCaracter, selectedProgAcademico, selectedAreaConoc,
+                esPrivadaSeleccionada,
+                esOficialSeleccionada, PregSelected, PosgSelected, PsemSelected, SsemSelected, metPres, metDis,
+                HomSelected, MujSelected, selectedOpcGraduados);
+
+        // Limpia el panel de gráficos antes de agregar uno nuevo
+        panel_graf12.removeAll();
+        panel_graf12.setLayout(new BorderLayout()); // Usar un BorderLayout
+        panel_graf12.add(chartPanel, BorderLayout.CENTER);
+        panel_graf12.revalidate();
+        panel_graf12.repaint();
+
+    }
+
+    
+    private void eventoGenerarGraficoCombinado7() {
+
+        FuncionArchivo funcionArchivo = new FuncionArchivo();
+
+        String selectedYear = (String) jcpYear.getSelectedItem();
+        switch (selectedYear) {
+            case "2020":
+                funcionArchivo.Leer_Archivo("2020comas.csv");
+                break;
+            case "2021":
+                funcionArchivo.Leer_Archivo("2021comas.csv");
+                break;
+            case "2022":
+                funcionArchivo.Leer_Archivo("2022comas.csv");
+                break;
+            default:
+                throw new AssertionError();
+        }
+
+        String selectedCampoEsp = (String) jcEsp.getSelectedItem();
+        String selectedMun = (String) jcpMun.getSelectedItem();
+        String selectedNivForm = (String) jcNivForm.getSelectedItem();
+        String selectedDepto = (String) jcpDep.getSelectedItem();
+        String selectedUni = (String) jcpUni.getSelectedItem();
+        String selectedCaracter = (String) jcpForm.getSelectedItem();
+        String selectedProgAcademico = (String) jcPro.getSelectedItem();
+        String selectedAreaConoc = (String) jcArec.getSelectedItem();
+        String selectedOpcGraduados = (String) jcGrad.getSelectedItem();
+
+        // Obtener el estado de los checkboxes
+        boolean esPrivadaSeleccionada = jckPriv.isSelected();
+        boolean esOficialSeleccionada = jckOfic.isSelected();
+        boolean PregSelected = jckPreg.isSelected();
+        boolean PosgSelected = jckPosg.isSelected();
+        boolean PsemSelected = jck1_sem.isSelected();
+        boolean SsemSelected = jck2_sem.isSelected();
+        boolean metPres = jck1_P4.isSelected();
+        boolean metDis = jck2_P4.isSelected();
+        boolean HomSelected = jckHom.isSelected();
+        boolean MujSelected = jckMuj.isSelected();
+
+        // Llama al método que genera el gráfico
+        ChartPanel chartPanel = funcionArchivo.generarGraficoGeneral(selectedCampoEsp, selectedMun,
+                selectedNivForm, selectedDepto, selectedUni, selectedCaracter, selectedProgAcademico, selectedAreaConoc,
+                esPrivadaSeleccionada,
+                esOficialSeleccionada, PregSelected, PosgSelected, PsemSelected, SsemSelected, metPres, metDis,
+                HomSelected, MujSelected, selectedOpcGraduados);
+
+        // Limpia el panel de gráficos antes de agregar uno nuevo
+        panel_graf13.removeAll();
+        panel_graf13.setLayout(new BorderLayout()); // Usar un BorderLayout
+        panel_graf13.add(chartPanel, BorderLayout.CENTER);
+        panel_graf13.revalidate();
+        panel_graf13.repaint();
+
+    }
+
+    
+    private void eventoGenerarGraficoCombinado8() {
+
+        FuncionArchivo funcionArchivo = new FuncionArchivo();
+
+        String selectedYear = (String) jcpYear.getSelectedItem();
+        switch (selectedYear) {
+            case "2020":
+                funcionArchivo.Leer_Archivo("2020comas.csv");
+                break;
+            case "2021":
+                funcionArchivo.Leer_Archivo("2021comas.csv");
+                break;
+            case "2022":
+                funcionArchivo.Leer_Archivo("2022comas.csv");
+                break;
+            default:
+                throw new AssertionError();
+        }
+
+        String selectedCampoEsp = (String) jcEsp.getSelectedItem();
+        String selectedMun = (String) jcpMun.getSelectedItem();
+        String selectedNivForm = (String) jcNivForm.getSelectedItem();
+        String selectedDepto = (String) jcpDep.getSelectedItem();
+        String selectedUni = (String) jcpUni.getSelectedItem();
+        String selectedCaracter = (String) jcpForm.getSelectedItem();
+        String selectedProgAcademico = (String) jcPro.getSelectedItem();
+        String selectedAreaConoc = (String) jcArec.getSelectedItem();
+        String selectedOpcGraduados = (String) jcGrad.getSelectedItem();
+
+        // Obtener el estado de los checkboxes
+        boolean esPrivadaSeleccionada = jckPriv.isSelected();
+        boolean esOficialSeleccionada = jckOfic.isSelected();
+        boolean PregSelected = jckPreg.isSelected();
+        boolean PosgSelected = jckPosg.isSelected();
+        boolean PsemSelected = jck1_sem.isSelected();
+        boolean SsemSelected = jck2_sem.isSelected();
+        boolean metPres = jck1_P4.isSelected();
+        boolean metDis = jck2_P4.isSelected();
+        boolean HomSelected = jckHom.isSelected();
+        boolean MujSelected = jckMuj.isSelected();
+
+        // Llama al método que genera el gráfico
+        ChartPanel chartPanel = funcionArchivo.generarGraficoGeneral(selectedCampoEsp, selectedMun,
+                selectedNivForm, selectedDepto, selectedUni, selectedCaracter, selectedProgAcademico, selectedAreaConoc,
+                esPrivadaSeleccionada,
+                esOficialSeleccionada, PregSelected, PosgSelected, PsemSelected, SsemSelected, metPres, metDis,
+                HomSelected, MujSelected, selectedOpcGraduados);
+
+        // Limpia el panel de gráficos antes de agregar uno nuevo
+        panel_graf14.removeAll();
+        panel_graf14.setLayout(new BorderLayout()); // Usar un BorderLayout
+        panel_graf14.add(chartPanel, BorderLayout.CENTER);
+        panel_graf14.revalidate();
+        panel_graf14.repaint();
+
+    }
+
+    
+    private void eventoGenerarGraficoCombinado9() {
+
+        FuncionArchivo funcionArchivo = new FuncionArchivo();
+
+        String selectedYear = (String) jcpYear.getSelectedItem();
+        switch (selectedYear) {
+            case "2020":
+                funcionArchivo.Leer_Archivo("2020comas.csv");
+                break;
+            case "2021":
+                funcionArchivo.Leer_Archivo("2021comas.csv");
+                break;
+            case "2022":
+                funcionArchivo.Leer_Archivo("2022comas.csv");
+                break;
+            default:
+                throw new AssertionError();
+        }
+
+        String selectedCampoEsp = (String) jcEsp.getSelectedItem();
+        String selectedMun = (String) jcpMun.getSelectedItem();
+        String selectedNivForm = (String) jcNivForm.getSelectedItem();
+        String selectedDepto = (String) jcpDep.getSelectedItem();
+        String selectedUni = (String) jcpUni.getSelectedItem();
+        String selectedCaracter = (String) jcpForm.getSelectedItem();
+        String selectedProgAcademico = (String) jcPro.getSelectedItem();
+        String selectedAreaConoc = (String) jcArec.getSelectedItem();
+        String selectedOpcGraduados = (String) jcGrad.getSelectedItem();
+
+        // Obtener el estado de los checkboxes
+        boolean esPrivadaSeleccionada = jckPriv.isSelected();
+        boolean esOficialSeleccionada = jckOfic.isSelected();
+        boolean PregSelected = jckPreg.isSelected();
+        boolean PosgSelected = jckPosg.isSelected();
+        boolean PsemSelected = jck1_sem.isSelected();
+        boolean SsemSelected = jck2_sem.isSelected();
+        boolean metPres = jck1_P4.isSelected();
+        boolean metDis = jck2_P4.isSelected();
+        boolean HomSelected = jckHom.isSelected();
+        boolean MujSelected = jckMuj.isSelected();
+
+        // Llama al método que genera el gráfico
+        ChartPanel chartPanel = funcionArchivo.generarGraficoGeneral(selectedCampoEsp, selectedMun,
+                selectedNivForm, selectedDepto, selectedUni, selectedCaracter, selectedProgAcademico, selectedAreaConoc,
+                esPrivadaSeleccionada,
+                esOficialSeleccionada, PregSelected, PosgSelected, PsemSelected, SsemSelected, metPres, metDis,
+                HomSelected, MujSelected, selectedOpcGraduados);
+
+        // Limpia el panel de gráficos antes de agregar uno nuevo
+        panel_graf15.removeAll();
+        panel_graf15.setLayout(new BorderLayout()); // Usar un BorderLayout
+        panel_graf15.add(chartPanel, BorderLayout.CENTER);
+        panel_graf15.revalidate();
+        panel_graf15.repaint();
+
+    }
+
+    
+    private void eventoGenerarGraficoCombinado10() {
+
+        FuncionArchivo funcionArchivo = new FuncionArchivo();
+
+        String selectedYear = (String) jcpYear.getSelectedItem();
+        switch (selectedYear) {
+            case "2020":
+                funcionArchivo.Leer_Archivo("2020comas.csv");
+                break;
+            case "2021":
+                funcionArchivo.Leer_Archivo("2021comas.csv");
+                break;
+            case "2022":
+                funcionArchivo.Leer_Archivo("2022comas.csv");
+                break;
+            default:
+                throw new AssertionError();
+        }
+
+        String selectedCampoEsp = (String) jcEsp.getSelectedItem();
+        String selectedMun = (String) jcpMun.getSelectedItem();
+        String selectedNivForm = (String) jcNivForm.getSelectedItem();
+        String selectedDepto = (String) jcpDep.getSelectedItem();
+        String selectedUni = (String) jcpUni.getSelectedItem();
+        String selectedCaracter = (String) jcpForm.getSelectedItem();
+        String selectedProgAcademico = (String) jcPro.getSelectedItem();
+        String selectedAreaConoc = (String) jcArec.getSelectedItem();
+        String selectedOpcGraduados = (String) jcGrad.getSelectedItem();
+
+        // Obtener el estado de los checkboxes
+        boolean esPrivadaSeleccionada = jckPriv.isSelected();
+        boolean esOficialSeleccionada = jckOfic.isSelected();
+        boolean PregSelected = jckPreg.isSelected();
+        boolean PosgSelected = jckPosg.isSelected();
+        boolean PsemSelected = jck1_sem.isSelected();
+        boolean SsemSelected = jck2_sem.isSelected();
+        boolean metPres = jck1_P4.isSelected();
+        boolean metDis = jck2_P4.isSelected();
+        boolean HomSelected = jckHom.isSelected();
+        boolean MujSelected = jckMuj.isSelected();
+
+        // Llama al método que genera el gráfico
+        ChartPanel chartPanel = funcionArchivo.generarGraficoGeneral(selectedCampoEsp, selectedMun,
+                selectedNivForm, selectedDepto, selectedUni, selectedCaracter, selectedProgAcademico, selectedAreaConoc,
+                esPrivadaSeleccionada,
+                esOficialSeleccionada, PregSelected, PosgSelected, PsemSelected, SsemSelected, metPres, metDis,
+                HomSelected, MujSelected, selectedOpcGraduados);
+
+        // Limpia el panel de gráficos antes de agregar uno nuevo
+        panel_graf16.removeAll();
+        panel_graf16.setLayout(new BorderLayout()); // Usar un BorderLayout
+        panel_graf16.add(chartPanel, BorderLayout.CENTER);
+        panel_graf16.revalidate();
+        panel_graf16.repaint();
+
+    }
+
+
+
+
+
+
+
+
+
 
     public static void main(String[] args) {
         DashboardEstD v = new DashboardEstD();

@@ -125,7 +125,7 @@ public class FuncionArchivo {
     public void listar() {
         for (int i = 0; i < inst.size(); i++) {
             Institucion obj = inst.get(i);
-            System.out.println((i + 1) + " " + obj.getNivformacion());
+            System.out.println((i + 1) + " " + obj.getMunicipio());
         }
     }
 
@@ -190,7 +190,7 @@ public class FuncionArchivo {
                 false);
 
         // Ajustes visuales del gráfico
-        chart.setBackgroundPaint(new Color(255, 151, 120));
+        chart.setBackgroundPaint(new Color(120, 180, 255));
         Font titleFont = new Font("SansSerif", Font.BOLD, 18);
         chart.getTitle().setFont(titleFont);
 
@@ -641,9 +641,17 @@ public class FuncionArchivo {
     }
     
     
-    public ChartPanel generarGraficoCampoEspecifico(String campoEspecifico, String campoMunicipio, String campoNivForm, String campoDepto, String campoUni, 
-    String campoCaracter, String campoProgAcad, String campoAreaConoc) {
+    public ChartPanel generarGraficoGeneral(String campoEspecifico, String campoMunicipio, String campoNivForm, String campoDepto, String campoUni, 
+    String campoCaracter, String campoProgAcad, String campoAreaConoc,  boolean esPrivadaSeleccionada, boolean esOficialSeleccionada, boolean PregSelected, boolean PosgSelected,
+    boolean PsemSelected, boolean SsemSelected, boolean metPres, boolean metDis, boolean HomSelected, boolean MujSelected, String campoGrad) {
         int countCampoEspecifico = 0, countMun = 0, countNivForm = 0, countDepto = 0, countUni = 0, countCaracter = 0, countProgAcad = 0, countAreaConoc = 0;
+        int countTipoOfi = 0, countTipoPriv = 0;
+        int countPosg = 0, countPreg = 0;
+        int countPsem = 0, countSsem = 0;
+        int countMetPres = 0, countMetDis = 0;
+        int countHom = 0, countMuj = 0;
+        int countGrad = 0;
+    
     
         // Lógica para contar según el campo específico seleccionado
         for (int i = 0; i < inst.size(); i++) {
@@ -682,8 +690,43 @@ public class FuncionArchivo {
             }
 
             if(obj.areaconoc.equals(campoAreaConoc)){
-                countProgAcad++;
+                countAreaConoc++;
             }
+
+            if (esOficialSeleccionada && obj.tipo == 1) {
+                countTipoOfi++;
+            } else if (esPrivadaSeleccionada && obj.tipo == 2) {
+                countTipoPriv++;
+            }
+
+            if (PregSelected && obj.nivacademico.equals("PREGRADO")) {
+                countPreg++;
+            } else if (PosgSelected && obj.nivacademico.equals("POSGRADO")) {
+                countPosg++;
+            }
+
+            if (PsemSelected && obj.semestre.equals("1")) {
+                countPsem++;
+            } else if (SsemSelected && obj.semestre.equals("2")) {
+                countSsem++;
+            }
+
+            if (metPres && obj.metodología.equals("Presencial")) {
+                countMetPres++;
+            } else if (metDis && obj.metodología.equals("Distancia (tradicional)")) {
+                countMetDis++;
+            }
+
+            if (HomSelected && obj.genero.equals("Hombre")) {
+                countHom++;
+            } else if (MujSelected && obj.genero.equals("Mujer")) {
+                countMuj++;
+            }
+            
+            if ("Si".equals(campoGrad)) {
+                countGrad += obj.graduados;
+            }
+
 
 
         }
@@ -696,19 +739,31 @@ public class FuncionArchivo {
         System.out.println("Caracter (" + campoCaracter + "): " + countCaracter);
         System.out.println("Programa Académico (" + campoProgAcad + "): " + countProgAcad);
         System.out.println("Area de Conocimiento (" + campoAreaConoc + "): " + countProgAcad);
+        System.out.println("Tipo Oficial: " + countTipoOfi);
+        System.out.println("Tipo Privada: " + countTipoPriv);
+        System.out.println("Nivel Académico Pregrado: " + countPreg);
+        System.out.println("Nivel Académico Posgrado: " + countPosg);
+        System.out.println("Semestre 1: " + countPsem);
+        System.out.println("Semestre 2: " + countSsem);
+        System.out.println("Metodología Presencial: " + countMetPres);
+        System.out.println("Metodología Distancia: " + countMetDis);
+        System.out.println("Hombres: " + countHom);
+        System.out.println("Mujeres: " + countMuj);
+        System.out.println("Graduados: " + countGrad);
 
     
-        DefaultPieDataset dataset = createCampoEspecificoDataset(countCampoEspecifico, countMun, countNivForm, countDepto, countUni, countCaracter, countProgAcad, countAreaConoc );
+        DefaultPieDataset dataset = createCampoEspecificoDataset(countCampoEspecifico, countMun, countNivForm, countDepto, countUni, countCaracter, countProgAcad, countAreaConoc, 
+        countTipoOfi, countTipoPriv, countPreg, countPosg, countPsem, countSsem, countMetPres, countMetDis, countHom, countMuj, countGrad);
     
         JFreeChart chart = ChartFactory.createPieChart(
-                "GRÁFICO VARIABLE #1",
+                "GRÁFICO VARIABLE",
                 dataset,
                 true,
                 true,
                 false);
     
         // Ajustes visuales del gráfico
-        chart.setBackgroundPaint(new Color(120, 180, 255));
+        chart.setBackgroundPaint(new Color(144, 238, 144));
         Font titleFont = new Font("SansSerif", Font.BOLD, 18);
         chart.getTitle().setFont(titleFont);
     
@@ -725,7 +780,8 @@ public class FuncionArchivo {
         return chartPanel;
     }
     
-    private DefaultPieDataset createCampoEspecificoDataset(int countCampoEspecifico, int countMun, int countNivForm, int countDepto, int countUni, int countCaracter, int countProgAcad, int countAreaConoc) {
+    private DefaultPieDataset createCampoEspecificoDataset(int countCampoEspecifico, int countMun, int countNivForm, int countDepto, int countUni, int countCaracter, int countProgAcad, int countAreaConoc, int countTipoOfi, int countTipoPriv, 
+    int countPreg, int countPosg, int countPsem, int countSsem, int countMetPres, int countMetDis, int countHom, int countMuj, int countGrad) {
         DefaultPieDataset dataset = new DefaultPieDataset();
         dataset.setValue("Campo Específico", countCampoEspecifico);
         dataset.setValue("Municipio", countMun);
@@ -735,6 +791,18 @@ public class FuncionArchivo {
         dataset.setValue("Caracter", countCaracter);
         dataset.setValue("Programa Académico", countProgAcad);
         dataset.setValue("Area de Conocimiento", countAreaConoc);
+        dataset.setValue("Tipo Oficial", countTipoOfi);
+        dataset.setValue("Tipo Privada", countTipoPriv);
+        dataset.setValue("Nivel Académico Pregrado", countPreg);
+        dataset.setValue("Nivel Académico Posgrado", countPosg);
+        dataset.setValue("Semestre 1", countPsem);
+        dataset.setValue("Semestre 2", countSsem);
+        dataset.setValue("Metodología Presencial", countMetPres);
+        dataset.setValue("Metodología Distancia", countMetDis);
+        dataset.setValue("Hombres", countHom);
+        dataset.setValue("Mujeres", countMuj);
+        dataset.setValue("Graduados", countGrad);
+
         
 
     
