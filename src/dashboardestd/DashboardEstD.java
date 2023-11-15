@@ -2020,6 +2020,17 @@ public class DashboardEstD extends JFrame {
 
 
     public static void main(String[] args) {
+
+        String mensaje = "Manual de uso:\n\n" +
+                 "1. Al seleccionar el año, se generarán automáticamente las 6 gráficas fijas.\n" +
+                 "2. Utiliza los ComboBox y CheckBox para seleccionar las variables de interés.\n" +
+                 "3. Haz clic en el botón 'Graficar' para visualizar el gráfico de las variables seleccionadas.\n" +
+                 "4. Repite estos pasos para cada panel y gráfico que desees personalizar.\n\n";
+                 
+
+JOptionPane.showMessageDialog(null, mensaje);
+
+
         DashboardEstD v = new DashboardEstD();
     }
 }

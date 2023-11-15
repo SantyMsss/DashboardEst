@@ -6,7 +6,8 @@ public class Institucion {
     int graduados;
      // Nueva variable para representar la cantidad de graduados
 
-    public Institucion(String nombre, String depto, int tipo, String caracter, String genero, String nivacademico, String semestre, int graduados, String progacademico, String metodología, String areaconoc, String municipio, String nivformacion, String year, String descampoesp) {
+    public Institucion(String nombre, String depto, int tipo, String caracter, String genero, String nivacademico, 
+    String semestre, int graduados, String progacademico, String metodología, String areaconoc, String municipio, String nivformacion, String year, String descampoesp) {
         this.nombre = nombre;
         this.genero = genero;
         this.depto = depto;

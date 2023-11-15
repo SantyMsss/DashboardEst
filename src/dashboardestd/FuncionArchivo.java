@@ -352,7 +352,7 @@ public class FuncionArchivo {
 
         System.out.println("Inst tecnica profesional: " + InstTecProf);
         System.out.println("Inst tecnica: " + InstTecn);
-        System.out.println("Institucion Universitaria: " + InstUniv);
+        System.out.println("Institucion Universitaria/Escuela Tecnologica: " + InstUniv);
         System.out.println("Universidad: " + Univ);
 
         DefaultCategoryDataset dataset = createDataset(InstTecProf, InstTecn, InstUniv, Univ);
@@ -388,9 +388,9 @@ public class FuncionArchivo {
 
     private DefaultCategoryDataset createDataset(int instTecProf, int instTecn, int instUniv, int univ) {
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-        dataset.addValue(instTecProf, "Institución Técnica Profesional", "TIPO");
-        dataset.addValue(instTecn, "Institución Técnica", "TIPO");
-        dataset.addValue(instUniv, "Institución Universitaria", "TIPO");
+        dataset.addValue(instTecProf, "Institucion Tecnica Profesional", "TIPO");
+        dataset.addValue(instTecn, "Institucion Tecnica", "TIPO");
+        dataset.addValue(instUniv, "Institucion Universitaria", "TIPO");
         dataset.addValue(univ, "Universidad", "TIPO");
         return dataset;
     }
