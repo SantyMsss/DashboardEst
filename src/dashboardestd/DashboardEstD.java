@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -17,6 +18,7 @@ import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
@@ -26,13 +28,13 @@ import javax.swing.border.TitledBorder;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
-import org.jfree.chart.axis.CategoryAxis;
-import org.jfree.chart.axis.NumberAxis;
-import org.jfree.chart.plot.CategoryPlot;
-import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.data.category.DefaultCategoryDataset;
+import org.jfree.chart.plot.PiePlot;
+import org.jfree.chart.plot.RingPlot;
+import org.jfree.data.general.DefaultPieDataset;
 
 public class DashboardEstD extends JFrame {
+
+    ArrayList<Institucion> inst = new ArrayList<>();
 
     JSplitPane jsplit;
     JButton jButtones;
@@ -41,7 +43,7 @@ public class DashboardEstD extends JFrame {
     JPanel panel_graf1, panel_graf2, panel_graf3, panel_graf4, panel_graf5, panel_graf6, panel_graf7, panel_graf8,
             panel_graf9, panel_graf10cal, panelPro;// cambiar por ChartPanel
     JComboBox<String> jcpUni, jcpYear, jcP2, jcpDep, jcP5, jcpMun, jcpForm, jcPro, jcEsp, jcArec, jcNivForm, jcGrad;
-    JCheckBox jck1_P2, jck2_P2, jck1_P3, jck2_P3, jck3_P3, jck1_P4, jck2_P4, jck1_sem, jck2_sem, jckPreg, jckPosg,
+    JCheckBox jck1_P2, jck2_P2, jckPriv, jckOfic, jck3_P3, jck1_P4, jck2_P4, jck1_sem, jck2_sem, jckPreg, jckPosg,
             jckHom, jckMuj;
     JLabel jlImagen1, jlImagen2;
 
@@ -103,8 +105,15 @@ public class DashboardEstD extends JFrame {
         jcpYear.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                eventojcpYear(); // Llamar al método correspondiente cuando se seleccione un año
+
+                String selectedYear = (String) jcpYear.getSelectedItem();
+                // Llamar al método correspondiente cuando se seleccione un año
+                eventojcpYear();
+
+                jcpYear.setEnabled(false);
+
             }
+
         });
 
         panelDep = new JPanel();// jpanel para opciones de consulta
@@ -117,16 +126,46 @@ public class DashboardEstD extends JFrame {
         jcpDep.addItem("Amazonas");
         jcpDep.addItem("Antioquia");
         jcpDep.addItem("Atlantico");
-        // Falta por agregar deptartamentos
-        jcpDep.addItem("ETC...");
+        jcpDep.addItem("Arauca");
+        jcpDep.addItem("Boyaca");
+        jcpDep.addItem("Caldas");
+        jcpDep.addItem("Caqueta");
+        jcpDep.addItem("Cauca");
+        jcpDep.addItem("Cesar");
+        jcpDep.addItem("Choco");
+        jcpDep.addItem("Cordoba");
+        jcpDep.addItem("Guainia");
+        jcpDep.addItem("Guaviare");
+        jcpDep.addItem("Huila");
+        jcpDep.addItem("La Guajira");
+        jcpDep.addItem("Magdalena");
+        jcpDep.addItem("Meta");
+        jcpDep.addItem("Nariño");
+        jcpDep.addItem("Norte de Santander");
+        jcpDep.addItem("Putumayo");
+        jcpDep.addItem("Quindio");
+        jcpDep.addItem("Risaralda");
+        jcpDep.addItem("San Andres y Providencia");
+        jcpDep.addItem("Santander");
+        jcpDep.addItem("Sucre");
+        jcpDep.addItem("Tolima");
+        jcpDep.addItem("Valle del Cauca");
+        jcpDep.addItem("Vaupes");
+        jcpDep.addItem("Vichada");
         jcpDep.setBounds(15, 17, 100, 25);// coord con respecto al panel panelUni
         panelDep.add(jcpDep);
         izq.add(panelDep);
         jcpDep.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                int dep = 0;
+
+                String selectedDepto = (String) jcpDep.getSelectedItem();
+
+                jcpDep.setEnabled(false);
 
             }
+
         });
 
         panelMun = new JPanel();// jpanel para opciones de consulta
@@ -141,7 +180,6 @@ public class DashboardEstD extends JFrame {
         jcpMun.addItem("Palmira");
         jcpMun.addItem("Bello");
 
-        // Falta por agregar municipios
         jcpMun.addItem("ETC...");
         jcpMun.setBounds(15, 17, 100, 25);// coord con respecto al panel panelUni
         panelMun.add(jcpMun);
@@ -149,6 +187,10 @@ public class DashboardEstD extends JFrame {
         jcpMun.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
+                String selectedMun = (String) jcpMun.getSelectedItem();
+
+                jcpMun.setEnabled(false);
 
             }
         });
@@ -159,15 +201,54 @@ public class DashboardEstD extends JFrame {
         panelUni.setBounds(10, 210, 260, 50);// coord con respecto al panel izq
         panelUni.setBorder(new TitledBorder("IES"));
         jcpUni = new JComboBox<>();
-        jcpUni.addItem("Unidad Central Del Valle Del Cauca");
-        jcpUni.addItem("Universidad Catoica");
-        jcpUni.addItem("Escuela De Logistica");
+        jcpUni.addItem("UNIDAD CENTRAL DEL VALLE DEL CAUCA");
+        jcpUni.addItem("UNIVERSIDAD NACIONAL DE COLOMBIA");
+        jcpUni.addItem("UNIVERSIDAD DEL VALLE");
+        jcpUni.addItem("UNIVERSIDAD DE ANTIOQUIA");
+        jcpUni.addItem("UNIVERSIDAD INDUSTRIAL DE SANTANDER");
+        jcpUni.addItem("UNIVERSIDAD DE LOS ANDES");
+        jcpUni.addItem("UNIVERSIDAD DE CALDAS");
+        jcpUni.addItem("UNIVERSIDAD DEL CAUCA");
+        jcpUni.addItem("UNIVERSIDAD DE PAMPLONA");
+        jcpUni.addItem("UNIVERSIDAD DEL ATLANTICO");
+        jcpUni.addItem("UNIVERSIDAD DE LA SABANA");
+        jcpUni.addItem("UNIVERSIDAD DE CORDOBA");
+        jcpUni.addItem("UNIVERSIDAD EAFIT");
+        jcpUni.addItem("UNIVERSIDAD DEL TOLIMA");
+        jcpUni.addItem("UNIVERSIDAD DEL QUINDIO");
+        jcpUni.addItem("UNIVERSIDAD DE SAN BUENAVENTURA");
+        jcpUni.addItem("UNIVERSIDAD DE LIBRE");
+        jcpUni.addItem("UNIVERSIDAD DE CARTAGENA");
+        jcpUni.addItem("UNIVERSIDAD DE NARIÑO");
+        jcpUni.addItem("UNIVERSIDAD ANTONIO NARIÑO");
+        jcpUni.addItem("UNIVERSIDAD NACIONAL ABIERTA Y A DISTANCIA UNAD");
+        jcpUni.addItem("ESCUELA SUPERIOR DE ADMINISTRACION PUBLICA ESAP");
+        jcpUni.addItem("UNIVERSIDAD DE CUNDINAMARCA");
+        jcpUni.addItem("INSTITUCION UNIVERSITARIA ANTONIO JOSE CAMACHO");
+        jcpUni.addItem("INSTITUTO TECNOLOGICO METROPOLITANO");
+        jcpUni.addItem("FUNDACION UNIVERSITARIA ESUMER");
+        jcpUni.addItem("CORPORACION UNIFICADA NACIONAL DE EDUCACION SUPERIOR CUN");
+        jcpUni.addItem("SERVICIO NACIONAL DE APRENDIZAJE SENA");
+        jcpUni.addItem("FUNDACION UNIVERSITARIA DE CIENCIAS DE LA SALUD");
+        jcpUni.addItem("INSTITUCION UNIVERSITARIA COMANDO DE EDUCACION Y DOCTRINA CEDOC DEL EJERCITO NACIONAL");
+        jcpUni.addItem("FUNDACION UNIVERSITARIA LUIS AMIGO");
+        jcpUni.addItem("FUNDACION UNIVERSITARIA DEL AREA ANDINA");
+        jcpUni.addItem("INSTITUCION UNIVERSITARIA BELLAS ARTES Y CIENCIAS DE BOLIVAR");
+        jcpUni.addItem("UNIVERSIDAD DE MEDELLIN");
+        jcpUni.addItem("UNIVERSIDAD TECNOLOGICA DE BOLIVAR");
+        jcpUni.addItem("DIRECCION NACIONAL DE ESCUELAS");
+        jcpUni.addItem("POLITECNICO GRANCOLOMBIANO");
+        jcpUni.addItem("TECNOLOGICO DE ANTIOQUIA");
         jcpUni.setBounds(15, 17, 240, 25);// coord con respecto al panel panelUni
         panelUni.add(jcpUni);
         izq.add(panelUni);
         jcpUni.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
+                String selectedUni = (String) jcpUni.getSelectedItem();
+
+                jcpUni.setEnabled(false);
 
             }
         });
@@ -178,16 +259,25 @@ public class DashboardEstD extends JFrame {
         panelForm.setBounds(280, 210, 260, 50);// coord con respecto al panel izq
         panelForm.setBorder(new TitledBorder("Caracter"));
         jcpForm = new JComboBox<>();
-        jcpForm.addItem("Inst tecnica profesional");
-        jcpForm.addItem("Inst tecnica");
-        jcpForm.addItem("Institucion Universitaria");
         jcpForm.addItem("Universidad");
+        jcpForm.addItem("Institucion Tecnologica");
+        jcpForm.addItem("Institucion Universitaria/Escuela Tecnologica");
+        jcpForm.addItem("Institucion Tecnica Profesional");
+
+
+       
+
+       
         jcpForm.setBounds(15, 17, 240, 25);// coord con respecto al panel panelUni
         panelForm.add(jcpForm);
         izq.add(panelForm);
         jcpForm.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
+                String selectedCaracter = (String) jcpForm.getSelectedItem();
+
+                jcpForm.setEnabled(false);
 
             }
         });
@@ -198,18 +288,84 @@ public class DashboardEstD extends JFrame {
         panelPro.setBounds(280, 390, 260, 50);// coord con respecto al panel izq
         panelPro.setBorder(new TitledBorder("Programa Academico"));
         jcPro = new JComboBox<>();
-        jcPro.addItem("Ingenieria de Sistemas");
-        jcPro.addItem("Ingenieria Industrial");
-        jcPro.addItem("Ingenieria Electronica");
-        jcPro.addItem("Ingenieria Mecanica");
-        jcPro.addItem("Ingenieria Civil");
-        jcPro.addItem("Ingenieria Ambiental");
+        jcPro.addItem("INGENIERIA AGRONOMICA");
+        jcPro.addItem("MEDICINA VETERINARIA");
+        jcPro.addItem("ZOOTECNIA");
+        jcPro.addItem("DISENO GRAFICO");
+        jcPro.addItem("CINE Y TELEVISION");
+        jcPro.addItem("ENFERMERIA");
+        jcPro.addItem("MEDICINA");
+        jcPro.addItem("ODONTOLOGIA");
+        jcPro.addItem("FISIOTERAPIA");
+        jcPro.addItem("NUTRICION Y DIETETICA");
+        jcPro.addItem("PSICOLOGIA");
+        jcPro.addItem("ARQUITECTURA");
+        jcPro.addItem("INGENIERIA CIVIL");
+        jcPro.addItem("INGENIERIA ELECTRONICA");
+        jcPro.addItem("INGENIERIA DE SISTEMAS");
+        jcPro.addItem("INGENIERIA MECANICA");
+        jcPro.addItem("INGENIERIA INDUSTRIAL");
+        jcPro.addItem("INGENIERIA ELECTRICA");
+        jcPro.addItem("TERAPIA OCUPACIONAL");
+        jcPro.addItem("BACTERIOLOGIA");
+        jcPro.addItem("ADMINISTRACION DE EMPRESAS");
+        jcPro.addItem("CONTADURIA PUBLICA");
+        jcPro.addItem("TRABAJO SOCIAL");
+        jcPro.addItem("DERECHO");
+        jcPro.addItem("ECONOMIA");
+        jcPro.addItem("FILOSOFIA");
+        jcPro.addItem("SOCIOLOGIA");
+        jcPro.addItem("ANTROPOLOGIA");
+        jcPro.addItem("HISTORIA");
+        jcPro.addItem("ADMINISTRACION DE EMPRESAS");
+        jcPro.addItem("FILOLOGIA E IDIOMAS");
+        jcPro.addItem("INGENIERIA AGRICOLA");
+        jcPro.addItem("INGENIERIA AGROINDUSTRIAL");
+        jcPro.addItem("INGENIERIA DE ALIMENTOS");
+        jcPro.addItem("ESTADISTICA");
+        jcPro.addItem("MATEMATICAS");
+        jcPro.addItem("FISICA");
+        jcPro.addItem("QUIMICA");
+        jcPro.addItem("BIOLOGIA");
+        jcPro.addItem("GEOLOGIA");
+        jcPro.addItem("INGENIERIA AMBIENTAL");
+        jcPro.addItem("INGENIERIA SANITARIA");
+        jcPro.addItem("FARMACIA");
+        jcPro.addItem("ESPECIALIDAD EN CIRUGIA PEDIATRICA");
+        jcPro.addItem("ESPECIALIDAD EN CIRUGIA PLASTICA");
+        jcPro.addItem("ESPECIALIDAD EN CIRUGIA GENERAL");
+        jcPro.addItem("ESPECIALIDAD EN CIRUGIA CARDIOVASCULAR");
+        jcPro.addItem("ESPECIALIDAD EN CIRUGIA MAXILOFACIAL");
+        jcPro.addItem("ESPECIALIDAD EN MEDICINA FISICA Y REHABILITACION");
+        jcPro.addItem("ESPECIALIDAD EN MEDICINA INTERNA");
+        jcPro.addItem("ESPECIALIDAD EN ENDOCRINOLOGIA");
+        jcPro.addItem("ESPECIALIDAD EN GASTROENTEROLOGIA");
+        jcPro.addItem("ESPECIALIDAD EN GERIATRIA");
+        jcPro.addItem("ESPECIALIDAD EN HEMATOLOGIA");
+        jcPro.addItem("ESPECIALIDAD EN NEFROLOGIA");
+        jcPro.addItem("ESPECIALIZACION EN CIENCIA Y TECNOLOGIA DE ALIMENTOS");
+        jcPro.addItem("MAESTRIA EN GENETICA HUMANA");
+        jcPro.addItem("MAESTRIA EN CIENCIAS - MATEMATICAS");
+        jcPro.addItem("MAESTRIA EN CIENCIAS - FISICA");
+        jcPro.addItem("DOCTORADO EN CIENCIAS - QUIMICA");
+        jcPro.addItem("ARTES PLASTICAS");
+
+
+        
+
+
+
+
         jcPro.setBounds(15, 17, 240, 25);// coord con respecto al panel panelUni
         panelPro.add(jcPro);
         izq.add(panelPro);
-        jcpForm.addActionListener(new ActionListener() {
+        jcPro.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
+                String selectedProgAcademico = (String) jcPro.getSelectedItem();
+
+                jcPro.setEnabled(false);
 
             }
         });
@@ -223,15 +379,32 @@ public class DashboardEstD extends JFrame {
         jcEsp.addItem("Agropecuario");
         jcEsp.addItem("Veterinaria");
         jcEsp.addItem("Salud");
-        jcEsp.addItem("Artes");
+        jcEsp.addItem("Artes"); 
+        jcEsp.addItem("Ciencias sociales y del comportamiento");
+        jcEsp.addItem("Humanidades (Excepto idiomas)");
+        jcEsp.addItem("Derecho");
+        jcEsp.addItem("Idiomas");
+        jcEsp.addItem("Ingeniería y profesiones afines");
+        jcEsp.addItem("Ciencias biologicas y afines");
+        jcEsp.addItem("Ciencias físicas");
+        jcEsp.addItem("Matematicas y estadistica");
+
+
+
+
+
 
         // Falta por agregar campos especificos
         jcEsp.setBounds(15, 17, 240, 25);// coord con respecto al panel panelUni
         panelEsp.add(jcEsp);
         izq.add(panelEsp);
-        jcpForm.addActionListener(new ActionListener() {
+        jcEsp.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
+                String selectedCampoEsp = (String) jcEsp.getSelectedItem();
+
+                jcEsp.setEnabled(false);
 
             }
         });
@@ -242,20 +415,24 @@ public class DashboardEstD extends JFrame {
         panelArec.setBounds(280, 510, 260, 50);// coord con respecto al panel izq
         panelArec.setBorder(new TitledBorder("Area de conocimiento"));
         jcArec = new JComboBox<>();
-        jcArec.addItem("Ingeniería arquitectura urbanismo y afines");
-        jcArec.addItem("Agronomía veterinaria y afines");
+        jcArec.addItem("Ingenieria arquitectura urbanismo y afines");
+        jcArec.addItem("Agronomia veterinaria y afines");
         jcArec.addItem("Ciencias de la salud");
-        jcArec.addItem("Ciencias de la educación");
-        jcArec.addItem("Matemáticas y ciencias naturales");
+        jcArec.addItem("Ciencias de la educacion");
+        jcArec.addItem("Matematicas y ciencias naturales");
         jcArec.addItem("Ciencias sociales y humanas");
-        jcArec.addItem("Economía administración contaduría y afines");
+        jcArec.addItem("ECONOMIA administracion contaduria y afines");
         jcArec.addItem("Bellas artes");
         jcArec.setBounds(15, 17, 240, 25);// coord con respecto al panel panelUni
         panelArec.add(jcArec);
         izq.add(panelArec);
-        jcpForm.addActionListener(new ActionListener() {
+        jcArec.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
+                String selectedAreaConoc = (String) jcArec.getSelectedItem();
+
+                jcArec.setEnabled(false);
 
             }
         });
@@ -267,19 +444,22 @@ public class DashboardEstD extends JFrame {
         panelNivForm.setBorder(new TitledBorder("Nivel de formacion"));
         jcNivForm = new JComboBox<>();
         jcNivForm.addItem("Universitaria");
-        jcNivForm.addItem("Maestría");
-        jcNivForm.addItem("Especialización médico quirúrgica");
-        jcNivForm.addItem("Especialización universitaria");
+        jcNivForm.addItem("Maestria");
+        jcNivForm.addItem("Especializacion medico quirurgica");
+        jcNivForm.addItem("Especializacion universitaria");
         jcNivForm.addItem("Doctorado");
-        jcNivForm.addItem("Tecnológica");
-        jcNivForm.addItem("Técnica profesional");
-        jcNivForm.addItem("Formación técnica profesional");
+        jcNivForm.addItem("Tecnologico");
+        jcNivForm.addItem("Formacion tecnica profesional");
         jcNivForm.setBounds(15, 17, 240, 25);// coord con respecto al panel panelUni
         panelNivForm.add(jcNivForm);
         izq.add(panelNivForm);
-        jcpForm.addActionListener(new ActionListener() {
+        jcNivForm.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
+                String selectedNivFormacion = (String) jcNivForm.getSelectedItem();
+
+                jcNivForm.setEnabled(false);
 
             }
         });
@@ -295,9 +475,13 @@ public class DashboardEstD extends JFrame {
         jcGrad.setBounds(15, 17, 240, 25);// coord con respecto al panel panelUni
         panelGrad.add(jcGrad);
         izq.add(panelGrad);
-        jcpForm.addActionListener(new ActionListener() {
+        jcGrad.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
+                String selectedOpcGraduados = (String) jcGrad.getSelectedItem();
+
+                jcGrad.setEnabled(false);
 
             }
         });
@@ -309,29 +493,33 @@ public class DashboardEstD extends JFrame {
         panel4.setBackground(Color.WHITE);
         panel4.setBounds(280, 270, 260, 50);// coord con respecto al panel izq
         panel4.setBorder(new TitledBorder("Sector IES"));
-        jck1_P3 = new JCheckBox("PRIVADA");
-        jck1_P3.setBounds(15, 17, 100, 25);// coord con respecto al panel2
-        jck2_P3 = new JCheckBox("OFICIAL");
-        jck2_P3.setBounds(120, 17, 100, 25);// coord con respecto al panel2
-        panel4.add(jck1_P3);
-        panel4.add(jck2_P3);
+        jckPriv = new JCheckBox("PRIVADA");
+        jckPriv.setBounds(15, 17, 100, 25);// coord con respecto al panel2
+        jckOfic = new JCheckBox("OFICIAL");
+        jckOfic.setBounds(120, 17, 100, 25);// coord con respecto al panel2
+        panel4.add(jckPriv);
+        panel4.add(jckOfic);
         izq.add(panel4);
         ItemListener itemListener = new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
+
                 if (e.getStateChange() == ItemEvent.SELECTED) {
                     // Desmarcar el otro JCheckBox si se selecciona uno
-                    if (e.getItem().equals(jck1_P3)) {
-                        jck2_P3.setSelected(false);
-                    } else if (e.getItem().equals(jck2_P3)) {
-                        jck1_P3.setSelected(false);
+                    String iesPriv = (String) jckPriv.getText();
+                    String iesOfi = (String) jckOfic.getText();
+                    if (e.getItem().equals(jckPriv)) {
+                        jckOfic.setSelected(false);
+                    } else if (e.getItem().equals(jckOfic)) {
+                        jckPriv.setSelected(false);
                     }
+                    ((JCheckBox) e.getItem()).setEnabled(false);
                 }
             }
         };
 
-        jck1_P3.addItemListener(itemListener);
-        jck2_P3.addItemListener(itemListener);
+        jckPriv.addItemListener(itemListener);
+        jckOfic.addItemListener(itemListener);
 
         panel3 = new JPanel();// jpanel para opciones de consulta
         panel3.setLayout(null);
@@ -351,11 +539,15 @@ public class DashboardEstD extends JFrame {
             public void itemStateChanged(ItemEvent e) {
                 if (e.getStateChange() == ItemEvent.SELECTED) {
                     // Desmarcar el otro JCheckBox si se selecciona uno
+                    String NivPreg = (String) jckPreg.getText();
+                    String NivPosg = (String) jckPosg.getText();
+
                     if (e.getItem().equals(jckPreg)) {
                         jckPosg.setSelected(false);
                     } else if (e.getItem().equals(jckPosg)) {
                         jckPreg.setSelected(false);
                     }
+                    ((JCheckBox) e.getItem()).setEnabled(false);
                 }
             }
         };
@@ -381,11 +573,16 @@ public class DashboardEstD extends JFrame {
             public void itemStateChanged(ItemEvent e) {
                 if (e.getStateChange() == ItemEvent.SELECTED) {
                     // Desmarcar el otro JCheckBox si se selecciona uno
+
+                    String sem1 = (String) jck1_sem.getText();
+                    String sem2 = (String) jck2_sem.getText();
+
                     if (e.getItem().equals(jck1_sem)) {
                         jck2_sem.setSelected(false);
                     } else if (e.getItem().equals(jck2_sem)) {
                         jck1_sem.setSelected(false);
                     }
+                    ((JCheckBox) e.getItem()).setEnabled(false);
                 }
             }
         };
@@ -410,12 +607,16 @@ public class DashboardEstD extends JFrame {
             @Override
             public void itemStateChanged(ItemEvent e) {
                 if (e.getStateChange() == ItemEvent.SELECTED) {
+
+                    String metPres = (String) jck1_P4.getText();
+                    String metDist = (String) jck2_P4.getText();
                     // Desmarcar el otro JCheckBox si se selecciona uno
                     if (e.getItem().equals(jck1_P4)) {
                         jck2_P4.setSelected(false);
                     } else if (e.getItem().equals(jck2_P4)) {
                         jck1_P4.setSelected(false);
                     }
+                    ((JCheckBox) e.getItem()).setEnabled(false);
                 }
             }
         };
@@ -440,12 +641,18 @@ public class DashboardEstD extends JFrame {
             @Override
             public void itemStateChanged(ItemEvent e) {
                 if (e.getStateChange() == ItemEvent.SELECTED) {
+
+                    String sexoHom = (String) jckHom.getText();
+                    String sexoMuj = (String) jckMuj.getText();
+
                     // Desmarcar el otro JCheckBox si se selecciona uno
                     if (e.getItem().equals(jckHom)) {
                         jckMuj.setSelected(false);
                     } else if (e.getItem().equals(jckMuj)) {
                         jckHom.setSelected(false);
                     }
+
+                    ((JCheckBox) e.getItem()).setEnabled(false);
                 }
             }
         };
@@ -630,7 +837,7 @@ public class DashboardEstD extends JFrame {
         panel_graf7 = new JPanel();// esto seria el ChartPanel de la grafica 4
         panel_graf7.setLayout(null);
         panel_graf7.setBackground(Color.GREEN);
-        panel_graf7.setBounds(1054, 10, 1000, 1000);
+        panel_graf7.setBounds(1054, 10, 512, 512);
         der.add(panel_graf7);
 
         /*
@@ -647,8 +854,56 @@ public class DashboardEstD extends JFrame {
 
         add(jsplit);
 
-        // Agrega listeners a los JComboBox o JCheckBox según sea necesario
+    }
 
+    public void eventoLimpiar() {
+        // Reiniciar JComboBox
+        jcpYear.setSelectedIndex(0);
+        jcpDep.setSelectedIndex(0);
+        jcpMun.setSelectedIndex(0);
+        jcpUni.setSelectedIndex(0);
+        jcpForm.setSelectedIndex(0);
+        jcPro.setSelectedIndex(0);
+        jcEsp.setSelectedIndex(0);
+        jcArec.setSelectedIndex(0);
+        jcNivForm.setSelectedIndex(0);
+        jcGrad.setSelectedIndex(0);
+
+        // Habilitar JComboBox nuevamente
+        jcpYear.setEnabled(true);
+        jcpDep.setEnabled(true);
+        jcpMun.setEnabled(true);
+        jcpUni.setEnabled(true);
+        jcpForm.setEnabled(true);
+        jcPro.setEnabled(true);
+        jcEsp.setEnabled(true);
+        jcArec.setEnabled(true);
+        jcNivForm.setEnabled(true);
+        jcGrad.setEnabled(true);
+
+        // Desmarcar JCheckBox
+        jckPriv.setSelected(false);
+        jckOfic.setSelected(false);
+        jckPreg.setSelected(false);
+        jckPosg.setSelected(false);
+        jck1_sem.setSelected(false);
+        jck2_sem.setSelected(false);
+        jck1_P4.setSelected(false);
+        jck2_P4.setSelected(false);
+        jckHom.setSelected(false);
+        jckMuj.setSelected(false);
+
+        // Habilitar JCheckBox nuevamente
+        jckPriv.setEnabled(true);
+        jckOfic.setEnabled(true);
+        jckPreg.setEnabled(true);
+        jckPosg.setEnabled(true);
+        jck1_sem.setEnabled(true);
+        jck2_sem.setEnabled(true);
+        jck1_P4.setEnabled(true);
+        jck2_P4.setEnabled(true);
+        jckHom.setEnabled(true);
+        jckMuj.setEnabled(true);
     }
 
     public void eventojcpYear() {
@@ -738,33 +993,6 @@ public class DashboardEstD extends JFrame {
     }
 
     public void eventojcpForm() {
-
-    }
-
-    public void eventoLimpiar() {
-
-        jcpYear.setSelectedIndex(0);
-        jcpDep.setSelectedIndex(0);
-        jcpMun.setSelectedIndex(0);
-        jcpUni.setSelectedIndex(0);
-        jcpForm.setSelectedIndex(0);
-        jcPro.setSelectedIndex(0);
-        jcEsp.setSelectedIndex(0);
-        jcArec.setSelectedIndex(0);
-        jcNivForm.setSelectedIndex(0);
-        jcGrad.setSelectedIndex(0);
-
-        // Desmarcar JCheckBox
-        jck1_P3.setSelected(false);
-        jck2_P3.setSelected(false);
-        jckPreg.setSelected(false);
-        jckPosg.setSelected(false);
-        jck1_sem.setSelected(false);
-        jck2_sem.setSelected(false);
-        jck1_P4.setSelected(false);
-        jck2_P4.setSelected(false);
-        jckHom.setSelected(false);
-        jckMuj.setSelected(false);
 
     }
 
@@ -910,6 +1138,43 @@ public class DashboardEstD extends JFrame {
     }
 
     private void eventoGenerarGraficoCombinado() {
+
+        FuncionArchivo funcionArchivo = new FuncionArchivo();
+
+        String selectedYear = (String) jcpYear.getSelectedItem();
+        switch (selectedYear) {
+            case "2020":
+                funcionArchivo.Leer_Archivo("2020comas.csv");
+                break;
+            case "2021":
+                funcionArchivo.Leer_Archivo("2021comas.csv");
+                break;
+            case "2022":
+                funcionArchivo.Leer_Archivo("2022comas.csv");
+                break;
+            default:
+                throw new AssertionError();
+        }
+
+        String selectedCampoEsp = (String) jcEsp.getSelectedItem();
+        String selectedMun = (String) jcpMun.getSelectedItem();
+        String selectedNivForm = (String) jcNivForm.getSelectedItem();
+        String selectedDepto = (String) jcpDep.getSelectedItem();
+        String selectedUni = (String) jcpUni.getSelectedItem();
+        String selectedCaracter = (String) jcpForm.getSelectedItem();
+        String selectedProgAcademico = (String) jcPro.getSelectedItem();
+        String selectedAreaConoc = (String) jcArec.getSelectedItem();
+
+        // Llama al método que genera el gráfico
+        ChartPanel chartPanel = funcionArchivo.generarGraficoCampoEspecifico(selectedCampoEsp, selectedMun,
+                selectedNivForm, selectedDepto, selectedUni, selectedCaracter, selectedProgAcademico, selectedAreaConoc);
+
+        // Limpia el panel de gráficos antes de agregar uno nuevo
+        panel_graf7.removeAll();
+        panel_graf7.setLayout(new BorderLayout()); // Usar un BorderLayout
+        panel_graf7.add(chartPanel, BorderLayout.CENTER);
+        panel_graf7.revalidate();
+        panel_graf7.repaint();
 
     }
 

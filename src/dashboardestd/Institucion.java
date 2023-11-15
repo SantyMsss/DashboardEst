@@ -1,13 +1,12 @@
 package dashboardestd;
 
 public class Institucion {
-    String nombre, depto, municipio, genero, nivacademico, semestre, progacademico, metodología, areaconoc, nivformacion;
+    String nombre, depto, municipio, genero,caracter, nivacademico, semestre, progacademico, metodología, areaconoc, nivformacion, year, descampoesp;
     int tipo; // 1-> OFICIAL, 2-> PRIVADO
-    int caracter;
     int graduados;
      // Nueva variable para representar la cantidad de graduados
 
-    public Institucion(String nombre, String depto, int tipo, int caracter, String genero, String nivacademico, String semestre, int graduados, String progacademico, String metodología, String areaconoc, String municipio, String nivformacion) {
+    public Institucion(String nombre, String depto, int tipo, String caracter, String genero, String nivacademico, String semestre, int graduados, String progacademico, String metodología, String areaconoc, String municipio, String nivformacion, String year, String descampoesp) {
         this.nombre = nombre;
         this.genero = genero;
         this.depto = depto;
@@ -21,6 +20,19 @@ public class Institucion {
         this.areaconoc = areaconoc; // Inicializa la variable areaconoc
         this.municipio = municipio;
         this.nivformacion = nivformacion;
+        this.year = year;
+        this.descampoesp = descampoesp;
+
+
+    }
+
+
+    public String getDescampoesp() {
+        return descampoesp;
+    }
+
+    public String getYear() {
+        return year;
     }
 
     public String getNivformacion() {
@@ -67,7 +79,7 @@ public class Institucion {
         return genero;
     }
 
-    public int getCaracter() {
+    public String getCaracter() {
         return caracter;
     }
 

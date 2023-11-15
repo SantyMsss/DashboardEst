@@ -66,26 +66,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.List;
 
-
 public class FuncionArchivo {
-    
 
 
     ArrayList<Institucion> inst = new ArrayList<>();
-    private Map<String, Integer> datosAcumulativos;
-    private List<Institucion> InstitucionList;
 
-
-    public FuncionArchivo() {
-        // Inicializar datos acumulativos
-        datosAcumulativos = new HashMap<>();
-    }
-
-    public void cargarDatos(List<Institucion> datos) {
-        this.InstitucionList = datos;
-    }
-
-
+    
     public void Leer_Archivo(String nomFile) {
         FileReader fr = null;
         boolean error = false;
@@ -102,23 +88,25 @@ public class FuncionArchivo {
             int fila = 1;
             try {
                 while ((linea = br.readLine()) != null) {
-                    //System.out.println(fila + " - " + linea);
+                    // System.out.println(fila + " - " + linea);
                     tokens = linea.split(",");
                     inst.add(new Institucion(
                             tokens[0], // Nombre
                             tokens[5], // Departamento
                             Integer.parseInt(tokens[1]), // Tipo
-                            Integer.parseInt(tokens[2]), // Caracter
+                            tokens[3], // Caracter
                             tokens[21], // Género
                             tokens[11], // Nivel Académico
                             tokens[23], // Semestre
                             Integer.parseInt(tokens[24])// Graduados
-                            ,tokens[9] // Programa Academico
-                            ,tokens[15] // Metodologia
-                            ,tokens[17] // Area de conocimiento
-                            ,tokens[7] // Municipio
-                            ,tokens[13] // Nivel de formacion
-                            
+                            , tokens[9] // Programa Academico
+                            , tokens[15] // Metodologia
+                            , tokens[17] // Area de conocimiento
+                            , tokens[7] // Municipio
+                            , tokens[13] // Nivel de formacion
+                            , tokens[22] // Año
+                            , tokens[19] // Descampoesp
+
                     ));
                     fila++;
                 }
@@ -130,45 +118,49 @@ public class FuncionArchivo {
             } catch (Exception e) {
                 System.out.println(e);
             }
-        }// if(!error)
+        } // if(!error)
     }
-    
-    
+
     // ----------------------- LISTAR -------------------------------
-    public void listar(){
+    public void listar() {
         for (int i = 0; i < inst.size(); i++) {
             Institucion obj = inst.get(i);
-            System.out.println((i+1) + " " + obj.getGraduados());
+            System.out.println((i + 1) + " " + obj.getNivformacion());
         }
     }
-    
-    public void estadisticaUni(){
+
+    public void estadisticaUni() {
         int nacional = 0, uceva = 0, univalle = 0, antioquia = 0;
         for (int i = 0; i < inst.size(); i++) {
             Institucion obj = inst.get(i);
             switch (obj.nombre) {
-                case "UNIVERSIDAD NACIONAL DE COLOMBIA":   nacional++;                  
+                case "UNIVERSIDAD NACIONAL DE COLOMBIA":
+                    nacional++;
                     break;
-                case "UNIDAD CENTRAL DEL VALLE DEL CAUCA":   uceva++;                  
+                case "UNIDAD CENTRAL DEL VALLE DEL CAUCA":
+                    uceva++;
                     break;
-                case "UNIVERSIDAD DEL VALLE":   univalle++;                  
+                case "UNIVERSIDAD DEL VALLE":
+                    univalle++;
                     break;
-                case "UNIVERSIDAD DE ANTIOQUIA":   antioquia++;                  
+                case "UNIVERSIDAD DE ANTIOQUIA":
+                    antioquia++;
                     break;
             }
         }
         System.out.println(nacional);
         System.out.println(uceva);
-        System.out.println(univalle);         
+        System.out.println(univalle);
         System.out.println(antioquia);
-        
+
     }
-    
-    //----------------------------------DESARROLLO GRAFICAS -----------------------------------------------------------------
-     public ChartPanel generarGraficoHombresMujeres() {
+
+    // ----------------------------------DESARROLLO GRAFICAS
+    // -----------------------------------------------------------------
+    public ChartPanel generarGraficoHombresMujeres() {
         int hom = 0, mujer = 0;
 
-        // Lógica para contar hombres y mujeres 
+        // Lógica para contar hombres y mujeres
         for (int i = 0; i < inst.size(); i++) {
             Institucion obj = inst.get(i);
 
@@ -222,124 +214,117 @@ public class FuncionArchivo {
         dataset.addValue(mujeres, "MUJER", "GENERO");
         return dataset;
     }
-    
 
-       public ChartPanel generarGraficoPregPosg() {
-            int preg = 0, posg = 0;
+    public ChartPanel generarGraficoPregPosg() {
+        int preg = 0, posg = 0;
 
-            // Lógica para contar hombres y mujeres
-            for (int i = 0; i < inst.size(); i++) {
-                Institucion obj = inst.get(i);
+        // Lógica para contar hombres y mujeres
+        for (int i = 0; i < inst.size(); i++) {
+            Institucion obj = inst.get(i);
 
-                switch (obj.nivacademico) {
-                    case "PREGRADO":
-                    case "1":
-                        preg++;
-                        break;
-                    case "POSGRADO":
-                    case "2":
-                        posg++;
-                        break;
-                }
+            switch (obj.nivacademico) {
+                case "PREGRADO":
+                case "1":
+                    preg++;
+                    break;
+                case "POSGRADO":
+                case "2":
+                    posg++;
+                    break;
             }
-
-            System.out.println("Pregrado: " + preg);
-            System.out.println("Posgrado: " + posg);
-
-            DefaultPieDataset dataset = createTipoUniDataset(preg, posg);
-
-            JFreeChart chart = ChartFactory.createPieChart(
-                    "GRÁFICO DE PREGRADO VS POSGRADO EN EL AÑO ELEGIDO",
-                    dataset,
-                    true,
-                    true,
-                    false);
-
-            // Ajustes visuales del gráfico
-            chart.setBackgroundPaint(new Color(120, 180, 255));
-            Font titleFont = new Font("SansSerif", Font.BOLD, 18);
-            chart.getTitle().setFont(titleFont);
-
-
-            PiePlot plot = (PiePlot) chart.getPlot();
-            plot.setLabelFont(new Font("SansSerif", Font.PLAIN, 12));
-             plot.setSectionPaint("Pregrado", Color.WHITE);
-            plot.setSectionPaint("Posgrado", Color.BLACK);
-
-            // Crear el panel del gráfico
-            ChartPanel chartPanel = new ChartPanel(chart);
-            chartPanel.setPreferredSize(new Dimension(512, 512));
-
-            return chartPanel;
         }
 
-        private DefaultPieDataset createTipoUniDataset(int pregrado, int posgrado) {
-            DefaultPieDataset dataset = new DefaultPieDataset();
-            dataset.setValue("Pregrado", pregrado);
-            dataset.setValue("Posgrado", posgrado);
+        System.out.println("Pregrado: " + preg);
+        System.out.println("Posgrado: " + posg);
 
-            return dataset;
-        }
-        
-        
+        DefaultPieDataset dataset = createTipoUniDataset(preg, posg);
 
+        JFreeChart chart = ChartFactory.createPieChart(
+                "GRÁFICO DE PREGRADO VS POSGRADO EN EL AÑO ELEGIDO",
+                dataset,
+                true,
+                true,
+                false);
 
+        // Ajustes visuales del gráfico
+        chart.setBackgroundPaint(new Color(120, 180, 255));
+        Font titleFont = new Font("SansSerif", Font.BOLD, 18);
+        chart.getTitle().setFont(titleFont);
 
-        public ChartPanel generarGraficoOficxPriv() {
-            int Ofic = 0, Priv = 0;
+        PiePlot plot = (PiePlot) chart.getPlot();
+        plot.setLabelFont(new Font("SansSerif", Font.PLAIN, 12));
+        plot.setSectionPaint("Pregrado", Color.WHITE);
+        plot.setSectionPaint("Posgrado", Color.BLACK);
 
-            // Lógica para contar oficiales y privadas
-            for (int i = 0; i < inst.size(); i++) {
-                Institucion obj = inst.get(i);
+        // Crear el panel del gráfico
+        ChartPanel chartPanel = new ChartPanel(chart);
+        chartPanel.setPreferredSize(new Dimension(512, 512));
 
-                switch (obj.tipo) {
-                    case 1:
-                        Ofic++;
-                        break;
-                    case 2:
-                        Priv++;
-                        break;
-                }
+        return chartPanel;
+    }
+
+    private DefaultPieDataset createTipoUniDataset(int pregrado, int posgrado) {
+        DefaultPieDataset dataset = new DefaultPieDataset();
+        dataset.setValue("Pregrado", pregrado);
+        dataset.setValue("Posgrado", posgrado);
+
+        return dataset;
+    }
+
+    public ChartPanel generarGraficoOficxPriv() {
+        int Ofic = 0, Priv = 0;
+
+        // Lógica para contar oficiales y privadas
+        for (int i = 0; i < inst.size(); i++) {
+            Institucion obj = inst.get(i);
+
+            switch (obj.tipo) {
+                case 1:
+                    Ofic++;
+                    break;
+                case 2:
+                    Priv++;
+                    break;
             }
-
-            System.out.println("Oficial: " + Ofic);
-            System.out.println("Privada: " + Priv);
-
-            DefaultPieDataset dataset = createTipoOficxPriv(Ofic, Priv);
-
-            JFreeChart chart = ChartFactory.createRingChart(
-                    "GRÁFICO DE OFICIALES VS PRIVADAS EN EL AÑO ELEGIDO",
-                    dataset,
-                    true,
-                    true,
-                    false);
-
-            // Ajustes visuales del gráfico
-            chart.setBackgroundPaint(new Color(90, 180, 255));
-            Font titleFont = new Font("SansSerif", Font.BOLD, 18);
-            chart.getTitle().setFont(titleFont);
-
-            RingPlot plot = (RingPlot) chart.getPlot();
-            plot.setSectionPaint("Oficial", Color.BLACK);
-            plot.setSectionPaint("Privada", Color.RED);
-
-            // Crear el panel del gráfico
-            ChartPanel chartPanel = new ChartPanel(chart);
-            chartPanel.setPreferredSize(new Dimension(512, 512));
-
-            return chartPanel;
         }
 
-            private DefaultPieDataset createTipoOficxPriv(int oficial, int privada) {
-            DefaultPieDataset dataset = new DefaultPieDataset();
-            dataset.setValue("Oficial", oficial);
-            dataset.setValue("Privada", privada);
+        System.out.println("Oficial: " + Ofic);
+        System.out.println("Privada: " + Priv);
 
-            return dataset;
-        }
-            
-            
-        public ChartPanel generarGraficoxCaracter() {
+        DefaultPieDataset dataset = createTipoOficxPriv(Ofic, Priv);
+
+        JFreeChart chart = ChartFactory.createRingChart(
+                "GRÁFICO DE OFICIALES VS PRIVADAS EN EL AÑO ELEGIDO",
+                dataset,
+                true,
+                true,
+                false);
+
+        // Ajustes visuales del gráfico
+        chart.setBackgroundPaint(new Color(90, 180, 255));
+        Font titleFont = new Font("SansSerif", Font.BOLD, 18);
+        chart.getTitle().setFont(titleFont);
+
+        RingPlot plot = (RingPlot) chart.getPlot();
+        plot.setSectionPaint("Oficial", Color.BLACK);
+        plot.setSectionPaint("Privada", Color.RED);
+
+        // Crear el panel del gráfico
+        ChartPanel chartPanel = new ChartPanel(chart);
+        chartPanel.setPreferredSize(new Dimension(512, 512));
+
+        return chartPanel;
+    }
+
+    private DefaultPieDataset createTipoOficxPriv(int oficial, int privada) {
+        DefaultPieDataset dataset = new DefaultPieDataset();
+        dataset.setValue("Oficial", oficial);
+        dataset.setValue("Privada", privada);
+
+        return dataset;
+    }
+
+    public ChartPanel generarGraficoxCaracter() {
         int Univ = 0, InstUniv = 0, InstTecn = 0, InstTecProf = 0;
 
         // Lógica para contar características
@@ -347,16 +332,16 @@ public class FuncionArchivo {
             Institucion obj = inst.get(i);
 
             switch (obj.caracter) {
-                case 1:
+                case "Universidad":
                     InstTecProf++;
                     break;
-                case 2:
+                case "Institucion Tecnologica":
                     InstTecn++;
                     break;
-                case 3:
+                case "Institucion Universitaria/Escuela Tecnologica":
                     InstUniv++;
                     break;
-                case 4:
+                case "Institucion Tecnica Profesional":
                     Univ++;
                     break;
             }
@@ -406,10 +391,14 @@ public class FuncionArchivo {
         dataset.addValue(univ, "Universidad", "TIPO");
         return dataset;
     }
-    
+
     public ChartPanel generarGraficoxDepto() {
-      
-      int Amazonas = 0, Antioquia = 0, Arauca = 0, Atlantico = 0, Bogota = 0, Bolivar = 0, Boyaca = 0, Caldas = 0, Caqueta = 0, Casanare = 0, Cauca = 0, Cesar = 0, Choco = 0, Cordoba = 0, Cundinamarca = 0, Guainia = 0, Guaviare = 0, Huila = 0, LaGuajira = 0, Magdalena = 0, Meta = 0, Nariño = 0, NorteDeSantander = 0, Putumayo = 0, Quindio = 0, Risaralda = 0, SanAndresYProvidencia = 0, Santander = 0, Sucre = 0, Tolima = 0, ValleDelCauca = 0, Vaupes = 0, Vichada = 0;
+
+        int Amazonas = 0, Antioquia = 0, Arauca = 0, Atlantico = 0, Bogota = 0, Bolivar = 0, Boyaca = 0, Caldas = 0,
+                Caqueta = 0, Casanare = 0, Cauca = 0, Cesar = 0, Choco = 0, Cordoba = 0, Cundinamarca = 0, Guainia = 0,
+                Guaviare = 0, Huila = 0, LaGuajira = 0, Magdalena = 0, Meta = 0, Nariño = 0, NorteDeSantander = 0,
+                Putumayo = 0, Quindio = 0, Risaralda = 0, SanAndresYProvidencia = 0, Santander = 0, Sucre = 0,
+                Tolima = 0, ValleDelCauca = 0, Vaupes = 0, Vichada = 0;
 
         // Lógica para contar características
         for (int i = 0; i < inst.size(); i++) {
@@ -425,13 +414,13 @@ public class FuncionArchivo {
                 case "Arauca":
                     Arauca++;
                     break;
-                case "Atlántico":
+                case "Atlantico":
                     Atlantico++;
                     break;
-                case "Bogotá D.C.":
+                case "BogotaD.C":
                     Bogota++;
                     break;
-                case "Bolívar":
+                case "Bolivar":
                     Bolivar++;
                     break;
                 case "Boyacá":
@@ -440,7 +429,7 @@ public class FuncionArchivo {
                 case "Caldas":
                     Caldas++;
                     break;
-                case "Caquetá":
+                case "Caqueta":
                     Caqueta++;
                     break;
                 case "Casanare":
@@ -452,10 +441,10 @@ public class FuncionArchivo {
                 case "Cesar":
                     Cesar++;
                     break;
-                case "Chocó":
+                case "Choco":
                     Choco++;
                     break;
-                case "Córdoba":
+                case "Cordoba":
                     Cordoba++;
                     break;
                 case "Cundinamarca":
@@ -494,7 +483,7 @@ public class FuncionArchivo {
                 case "Risaralda":
                     Risaralda++;
                     break;
-                case "San Andrés y Providencia":
+                case "San Andres y Providencia":
                     SanAndresYProvidencia++;
                     break;
                 case "Santander":
@@ -523,7 +512,7 @@ public class FuncionArchivo {
         System.out.println("Antioquia: " + Antioquia);
         System.out.println("Arauca: " + Arauca);
         System.out.println("Atlántico: " + Atlantico);
-        System.out.println("Bogotá D.C.: " + Bogota);
+        System.out.println("BogotáD.C: " + Bogota);
         System.out.println("Bolívar: " + Bolivar);
         System.out.println("Boyacá: " + Boyaca);
         System.out.println("Caldas: " + Caldas);
@@ -553,9 +542,12 @@ public class FuncionArchivo {
         System.out.println("Vaupés: " + Vaupes);
         System.out.println("Vichada: " + Vichada);
 
-        DefaultPieDataset dataset = createDataset(Amazonas, Antioquia, Arauca, Atlantico, Bogota, Bolivar, Boyaca, Caldas, Caqueta, Casanare,
-                Cauca, Cesar, Choco, Cordoba, Cundinamarca, Guainia, Guaviare, Huila, LaGuajira, Magdalena, Meta, Nariño, NorteDeSantander,
-                Putumayo, Quindio, Risaralda, SanAndresYProvidencia, Santander, Sucre, Tolima, ValleDelCauca, Vaupes, Vichada);
+        DefaultPieDataset dataset = createDataset(Amazonas, Antioquia, Arauca, Atlantico, Bogota, Bolivar, Boyaca,
+                Caldas, Caqueta, Casanare,
+                Cauca, Cesar, Choco, Cordoba, Cundinamarca, Guainia, Guaviare, Huila, LaGuajira, Magdalena, Meta,
+                Nariño, NorteDeSantander,
+                Putumayo, Quindio, Risaralda, SanAndresYProvidencia, Santander, Sucre, Tolima, ValleDelCauca, Vaupes,
+                Vichada);
 
         JFreeChart chart = ChartFactory.createRingChart(
                 "GRÁFICO DE DEPARTAMENTOS",
@@ -581,10 +573,13 @@ public class FuncionArchivo {
 
     private DefaultPieDataset createDataset(int... counts) {
         DefaultPieDataset dataset = new DefaultPieDataset();
-        String[] departamentos = {"Amazonas", "Antioquia", "Arauca", "Atlántico", "Bogotá D.C.", "Bolívar", "Boyacá", "Caldas", "Caquetá", "Casanare",
-                "Cauca", "Cesar", "Chocó", "Córdoba", "Cundinamarca", "Guainía", "Guaviare", "Huila", "La Guajira", "Magdalena", "Meta", "Nariño",
-                "Norte de Santander", "Putumayo", "Quindío", "Risaralda", "San Andrés y Providencia", "Santander", "Sucre", "Tolima", "Valle del Cauca",
-                "Vaupés", "Vichada"};
+        String[] departamentos = { "Amazonas", "Antioquia", "Arauca", "Atlántico", "BogotáD.C", "Bolívar", "Boyacá",
+                "Caldas", "Caquetá", "Casanare",
+                "Cauca", "Cesar", "Chocó", "Córdoba", "Cundinamarca", "Guainía", "Guaviare", "Huila", "La Guajira",
+                "Magdalena", "Meta", "Nariño",
+                "Norte de Santander", "Putumayo", "Quindío", "Risaralda", "San Andrés y Providencia", "Santander",
+                "Sucre", "Tolima", "Valle del Cauca",
+                "Vaupés", "Vichada" };
 
         for (int i = 0; i < counts.length; i++) {
             dataset.setValue(departamentos[i], counts[i]);
@@ -593,31 +588,26 @@ public class FuncionArchivo {
         return dataset;
     }
 
-
     public ChartPanel generarGrafGradxSemestre() {
-        DefaultCategoryDataset dataset = createDataset();
-        JFreeChart chart = ChartFactory.createBarChart(
-                "Graduados por Semestre", // Título del gráfico
-                "Semestre", // Etiqueta del eje X
-                "Cantidad de Graduados", // Etiqueta del eje Y
+        DefaultPieDataset dataset = createDataset();
+        JFreeChart chart = ChartFactory.createPieChart(
+                "GRADUADOS POR SEMESTRE", // Título del gráfico
                 dataset,
-                PlotOrientation.VERTICAL,
                 true,
                 true,
-                false
-        );
+                false);
 
         // Ajustes visuales del gráfico
         chart.setBackgroundPaint(new Color(120, 180, 255));
         Font titleFont = new Font("SansSerif", Font.BOLD, 18);
         chart.getTitle().setFont(titleFont);
 
-        CategoryPlot plot = (CategoryPlot) chart.getPlot();
-        CategoryAxis xAxis = plot.getDomainAxis();
-        xAxis.setTickLabelFont(new Font("SansSerif", Font.PLAIN, 12));
+        PiePlot plot = (PiePlot) chart.getPlot();
+        plot.setLabelFont(new Font("SansSerif", Font.PLAIN, 12));
 
-        NumberAxis yAxis = (NumberAxis) plot.getRangeAxis();
-        yAxis.setTickLabelFont(new Font("SansSerif", Font.PLAIN, 12));
+        // Establecer colores personalizados
+        plot.setSectionPaint("Semestre 1", Color.YELLOW);
+        plot.setSectionPaint("Semestre 2", Color.BLUE);
 
         // Crear el panel del gráfico
         ChartPanel chartPanel = new ChartPanel(chart);
@@ -626,8 +616,8 @@ public class FuncionArchivo {
         return chartPanel;
     }
 
-    private DefaultCategoryDataset createDataset() {
-        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+    private DefaultPieDataset createDataset() {
+        DefaultPieDataset dataset = new DefaultPieDataset();
 
         try {
             int semestre1 = 0;
@@ -641,30 +631,122 @@ public class FuncionArchivo {
                 }
             }
 
-            dataset.addValue(semestre1, "Cantidad de Graduados", "Semestre 1");
-            dataset.addValue(semestre2, "Cantidad de Graduados", "Semestre 2");
+            dataset.setValue("Semestre 1", semestre1);
+            dataset.setValue("Semestre 2", semestre2);
         } catch (Exception e) {
             e.printStackTrace(); // Maneja adecuadamente las excepciones según tus necesidades
         }
 
         return dataset;
     }
+    
+    
+    public ChartPanel generarGraficoCampoEspecifico(String campoEspecifico, String campoMunicipio, String campoNivForm, String campoDepto, String campoUni, 
+    String campoCaracter, String campoProgAcad, String campoAreaConoc) {
+        int countCampoEspecifico = 0, countMun = 0, countNivForm = 0, countDepto = 0, countUni = 0, countCaracter = 0, countProgAcad = 0, countAreaConoc = 0;
+    
+        // Lógica para contar según el campo específico seleccionado
+        for (int i = 0; i < inst.size(); i++) {
+            Institucion obj = inst.get(i);
+    
+            
+            if (obj.descampoesp.equals(campoEspecifico)) {
+                countCampoEspecifico++;
+               
+                
+            }
+             if (obj.municipio.equals(campoMunicipio)) {
+                countMun++;
+
+            }
+
+            if (obj.nivformacion.equals(campoNivForm)) {
+                countNivForm++;
+
+            }
+            if (obj.depto.equals(campoDepto)) {
+                countDepto++;
+
+            }
+            if (obj.nombre.equals(campoUni)) {
+                countUni++;
+
+            }
+            if (obj.caracter.equals(campoCaracter)) {
+                countCaracter++;
+
+            }
+            if (obj.progacademico.equals(campoProgAcad)) {
+                countProgAcad++;
+
+            }
+
+            if(obj.areaconoc.equals(campoAreaConoc)){
+                countProgAcad++;
+            }
 
 
-    private void eventoGenerarGraficoCombinado() {
-        
-         
-
-    }
+        }
+    
+        System.out.println("Campo Específico (" + campoEspecifico + "): " + countCampoEspecifico);
+        System.out.println("Municipio (" + campoMunicipio + "): " + countMun);
+        System.out.println("Nivel de Formación (" + campoNivForm + "): " + countNivForm);
+        System.out.println("Departamento (" + campoDepto + "): " + countDepto);
+        System.out.println("Universidad (" + campoUni + "): " + countUni);
+        System.out.println("Caracter (" + campoCaracter + "): " + countCaracter);
+        System.out.println("Programa Académico (" + campoProgAcad + "): " + countProgAcad);
+        System.out.println("Area de Conocimiento (" + campoAreaConoc + "): " + countProgAcad);
 
     
+        DefaultPieDataset dataset = createCampoEspecificoDataset(countCampoEspecifico, countMun, countNivForm, countDepto, countUni, countCaracter, countProgAcad, countAreaConoc );
+    
+        JFreeChart chart = ChartFactory.createPieChart(
+                "GRÁFICO VARIABLE #1",
+                dataset,
+                true,
+                true,
+                false);
+    
+        // Ajustes visuales del gráfico
+        chart.setBackgroundPaint(new Color(120, 180, 255));
+        Font titleFont = new Font("SansSerif", Font.BOLD, 18);
+        chart.getTitle().setFont(titleFont);
+    
+        PiePlot plot = (PiePlot) chart.getPlot();
+        plot.setLabelFont(new Font("SansSerif", Font.PLAIN, 12));
+    
+        // Crear el panel del gráfico
+        ChartPanel chartPanel = new ChartPanel(chart);
+        chartPanel.setPreferredSize(new Dimension(512, 512));
+    
+        // Aquí podrías mostrar el chartPanel en tu interfaz o realizar cualquier otra acción necesaria
+        // ...
+    
+        return chartPanel;
+    }
+    
+    private DefaultPieDataset createCampoEspecificoDataset(int countCampoEspecifico, int countMun, int countNivForm, int countDepto, int countUni, int countCaracter, int countProgAcad, int countAreaConoc) {
+        DefaultPieDataset dataset = new DefaultPieDataset();
+        dataset.setValue("Campo Específico", countCampoEspecifico);
+        dataset.setValue("Municipio", countMun);
+        dataset.setValue("Nivel de Formación", countNivForm);
+        dataset.setValue("Departamento", countDepto);
+        dataset.setValue("Universidad", countUni);
+        dataset.setValue("Caracter", countCaracter);
+        dataset.setValue("Programa Académico", countProgAcad);
+        dataset.setValue("Area de Conocimiento", countAreaConoc);
+        
+
+    
+        return dataset;
+    }
+
+
     public static void main(String[] args) {
         FuncionArchivo obj = new FuncionArchivo();
-        obj.Leer_Archivo("2022comas.csv");
+        obj.Leer_Archivo("2020comas.csv");
+        obj.listar();
         
-     
-        
-       
-        
+
     }
 }
